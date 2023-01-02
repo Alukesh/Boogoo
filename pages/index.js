@@ -1,11 +1,12 @@
 
+import Link from 'next/link';
+import Main from './main';
 
 
 export default function Home(){
   return(
     <main>
-      {/* <Main/> */}
-      <h1>MAIN</h1>
+      <Main/>
     </main>
   )
 }

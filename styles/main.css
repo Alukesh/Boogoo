@@ -1,0 +1,31 @@
+.banner{
+  position: relative;
+}
+.home__position{
+  position: absolute;
+  display: flex;
+  width: 80%;
+}
+.home__parallax{
+  height: 550px;
+  background-image: url('../public/paralacs.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: 90px;
+  /* transform: translateZ(-1000px); */
+}
+
+.home_carousel{
+    width: 100%;
+    height: 700px;
+    background: brown;
+  }
+  .slideimg1{
+    object-fit: center;
+    object-position: center;
+  }
+.home_slider1{
+    object-fit: cover;
+}

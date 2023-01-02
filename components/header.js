@@ -1,11 +1,13 @@
 import  Image  from 'next/image';
+import Link from 'next/link';
 import bish from '../public/bish.png'
 
 
 
 export default function Header(){
     return(
-        <header>
+        <>
+    <header>
         <div className="headerheader">
             <p className="slogan">Boogoo KG</p>
             <div className="around">
@@ -20,6 +22,10 @@ export default function Header(){
                     alt="logo" width={40} height={40} priority/>
             </div>
             <ul className="ulnav">
+                <Link href={{
+                    pathname: '/tours',
+                    query: { id: 2, comment: 'asdsa'},
+                }}>asdsa</Link>
                  <li><a className="nav" href="#">Услуги</a></li>
                 <li><a className="nav" href="#">Главная</a></li>
                 <li><a className="nav" href="#">Туры</a></li>
@@ -28,5 +34,6 @@ export default function Header(){
             </ul>
         </nav>
     </header>
+        </>
     )
 }

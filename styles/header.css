@@ -24,6 +24,7 @@
 .banner{
     position: relative;
     height: 90vh;
+    /* background: url('../public/bish.png') center/cover no-repeat; */
 }
 #banner {
     z-index: 10;
@@ -95,6 +96,8 @@
 .navigation {
     display: flex;
     justify-content: center;
+    /* position: sticky; */
+    /* top: 0; */
   
 }
 
@@ -146,14 +149,14 @@
 }
 
 #line {
-    background-color: #FFFFFF;
+    background-color: #d1d1d1;
     width: 50px;
     height: 5px;
     margin: 25px 0;
 }
 
 .text2 {
-    color: #FFFFFF;
+    /* color: #FFFFFF; */
     font-size: 35px;
     width: 55%;
     font-weight: 400;
@@ -347,6 +350,10 @@
 
 .card{
     position: relative;
+    transition: all .3s;
+}
+.card:hover{
+    transform: translateY(10px);
 }
 .card__bg{
     background-size: cover;
@@ -383,17 +390,14 @@
 
 .card-blur:hover>.card{
     transition: all .4s;
-    transform: scale(1.05) translateZ(0);
-    filter: brightness(0.5) saturate(0.5) contrast(1) blur(3px);
+    transform: scale(1) translateZ(200px) translateY(5px);
+    /* filter: brightness(0.8) saturate(1) contrast(1) blur(1px); */
 }
-/*.card__bg,.card:not(:hover){*/
-/*    transform: scale(1.05) translateZ(0);*/
-/*    filter: brightness(0.5) saturate(0.5) contrast(1) blur(6px);*/
-/*}*/
+
 .card-blur:hover>.card:hover{
     transition: all .4s;
-    transform: scale(1) translateZ(0);
-    filter: brightness(1) saturate(1) contrast(1) blur(0px);
+    transform: scale(1.05) translateZ(100px)  translateY(-10px);
+    /* filter: brightness(1) saturate(1) contrast(1) blur(0px); */
 }
 
   
@@ -410,6 +414,7 @@
     width: 100%;
     height: 370px;
     object-fit: cover;
+    border-radius: 4px;
 }
 .card__icon{
     height: 22px !important;
@@ -484,33 +489,7 @@
     width: 20%;
 }
 
-.price2 {
-    width: 20%;
-}
 
-.price3 {
-    width: 20%;
-}
-
-.price4 {
-    width: 20%;
-}
-
-.price5 {
-    width: 20%;
-}
-
-.price6 {
-    width: 20%;
-}
-
-.price7 {
-    width: 20%;
-}
-
-.price8 {
-    width: 20%;
-}
 
 .pricetext1 {
     font-family: 'Gilroy';
