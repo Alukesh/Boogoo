@@ -5,6 +5,9 @@ import clock from '../public/clock.png';
 import slider1 from '../public/slider1.png'
 import slider2 from '../public/slidernew.webp'
 import bish from '../public/bish.png'
+import nomad from '../public/nomad.jpg'
+import isyklake from '../public/isyklake.jpg'
+import Link from 'next/link';
 
 
 // export const getServerSideProps = async () => {
@@ -25,20 +28,19 @@ import bish from '../public/bish.png'
 
 
 const  Main = () => {
-    const videoBG = useRef(null)
 
     useEffect(() => {
-        videoBG.current.play()
+        // videoBG.current.play()
     }, [])
         const [tours, setTours] = useState()
     useEffect(()=>{
         const fetchdata = async () => {
-        const req = await fetch('http://127.0.0.1:8000/ru/api/v1/tours/')
-        const res = await req.json()
-        setTours(res.data)
-        console.log(res.data);
-    }
-    fetchdata()
+            const req = await fetch('http://127.0.0.1:8000/ru/api/v1/tours/?is_draft=false')
+            const res = await req.json()
+            setTours(res.data)
+            console.log(res.data);
+        }
+        fetchdata()
     },[])
     
 
@@ -47,21 +49,18 @@ const  Main = () => {
     return(
         <>
 
-        <video src={videoBg} ref={videoBG} autoplay loop muted  playsInline style={{zIndex:'-1', width: '100%'}}/>
+        <video src={videoBg}  autoPlay loop muted  playsInline style={{zIndex:'-1', width: '100%'}}/>
         
 
         <section className='banner'>
             <div id="banner">
-                <Carousel autoplay='6.6'  dotPosition={'right'} easing className={'home_carousel'} >
+                <Carousel autoplay='6.6'  dotPosition={'right'} easing >
                     <div className='home_slider1'>
-                        <Image className='slideimg1' src={slider1} alt='asa' unoptimized style={{width:'100%', height:'700px'}} />
+                        <Image className='slideimg1' src={slider1} alt='asa' unoptimized style={{width:'100%', height: '700px'}} />
                     </div>
                     <div className={'home_slider1'}>
-                        <Image className={'slideimg1'} src={slider2} alt='asa' unoptimized style={{width:'100%', height:'700px'}} />
+                        <Image className={'slideimg1'} src={slider2} alt='asa' unoptimized style={{width:'100%', height: '700px'}} />
                     </div>
-                    {/*<div className={styles.home_slider1}>
-                        <Image className={styles.slideimg1} src={slider3} width={1366} height={700} />
-                    </div> */}
                 </Carousel>
                     <div className="home__position">
                         <div className="afisha">
@@ -73,6 +72,39 @@ const  Main = () => {
                     </div>
             </div>
         </section>
+        <form onSubmit={(e) => e.preventDefault()} className='form' style={{
+            width: '80%',
+            margin: '0 auto',
+            height: '200px',
+            // background: 'wheat',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+        }}>
+            <input  style={{
+            width: '22%',
+            height: '40px',
+            }} type="text" placeholder="City, place" />
+            <input  style={{
+            width: '22%',
+            height: '40px',
+            }} type="text" />
+            <input  style={{
+            width: '22%',
+            height: '40px',
+            }} type="text"  placeholder="3"/>
+            <button style={{
+            width: '22%',
+            height: '40px',
+            outline: 'none',
+            border: 'none',
+            background: '#25d366',
+            color: '#ffffff',
+            fontSize: '18px',
+            letterSpacing: '0.1em',
+            borderRadius: '8px',
+            }} >Search</button>
+        </form>
 
 
         <section className=" sectionservice works">
@@ -88,31 +120,34 @@ const  Main = () => {
                 tours?.map(t => {
                     const src = t.image
                     return (
-                    <div key={t?.id} className=" price1 card">
-                    <Image width={300} height={400} loader={() => src} src={src} alt="bish"/>
-                    <span  className="card__icon card__inf" data-title="Написать фитбек">
-                        <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
-                    </span>
-                    <div className="card__bg"> </div>
-                    <p className="pricetext1">{t.name}</p>
-                    <p className="pricetext1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
-                    <div className="card__bot">
-                        <span className="pricetext2">1990 сом</span>
-                        <span className="card__time">
-                            <Image width={20} className="card__icon" src={clock} alt="time"/>
-                            <span>{t.days} days</span>
+                    <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
+                    }} key={t?.id} className=" card">
+                        <Image width={300} height={400} loader={() => src} src={src} alt="bish"/>
+                        <span  className="card__icon card__inf" data-title="Написать фитбек">
+                            <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
                         </span>
-                    </div>
-                </div>
+                        <div className="card__bg"> </div>
+                        <h3 className="card__title">{t.name}</h3>
+                        <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
+                        <div className="card__bot">
+                            <span className="pricetext2">1990 сом</span>
+                            <span className="card__time">
+                                <Image width={20} className="card__icon" src={clock} alt="time"/>
+                                <span>{t.days} days</span>
+                            </span>
+                        </div>
+                </Link>
                 )})
             }
-                 {/* <div className=" price1 card">
+                 <Link href={{ pathname: '/tours',  query: { id: 1, comment: 'asdsa'},
+                 }} className=" card">
                     <Image width={300} src={bish} alt="bish"/>
-                    <span  className="card__icon card__inf" data-title="Написать фитбек">
+                    <span  className="card__icon card__inf" data-title="Пн-Чт">
                         <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
                     </span>
                     <div className="card__bg"> </div>
-                    <p className="pricetext1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
+                    <h3 className="card__title">t.name</h3>
+                    <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
                     <div className="card__bot">
                         <span className="pricetext2">1990 сом</span>
                         <span className="card__time">
@@ -120,23 +155,7 @@ const  Main = () => {
                             <span>1 hours</span>
                         </span>
                     </div>
-                </div> */}
-                
-               <div className=" price1 card">
-                    <Image width={300} src={bish} alt="bish"/>
-                    <span  className="card__icon card__inf" data-title="Написать фитбек">
-                        <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
-                    </span>
-                    <div className="card__bg"> </div>
-                    <p className="pricetext1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
-                    <div className="card__bot">
-                        <span className="pricetext2">1990 сом</span>
-                        <span className="card__time">
-                            <Image width={20} className="card__icon" src={clock} alt="time"/>
-                            <span>1 hours</span>
-                        </span>
-                    </div>
-                </div>
+                </Link>
                 
                 
 
@@ -152,6 +171,76 @@ const  Main = () => {
             
         </div>
 
+        <section className="sectionservice">
+            <h2 className="section_title ">Почему у нас</h2>
+            <div className="container">
+                <div className="group">
+                    <div className="group1">
+                        {/* <imgName class="group__img" src="./img/Group1.png" alt=""> */}
+                        <p className="ptext1">Туризм по духу</p>
+                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
+                        <p className="ptext3">+996 (0553) 577-575</p>
+                    </div>
+
+
+                    <div className="group2">
+                        {/* <imgName class="group__img" src="./img/Group2.png" alt=""> */}
+                        <p className="ptext1">Доступные предложения по цене</p>
+                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
+                        <p className="ptext3">+996 (0553) 577-575</p>
+                    </div>
+
+                    <div className="group3">
+                        {/* <imgName class="group__img" src="./img/Group3.png" alt=""> */}
+                        <p className="ptext1">Отдых без напряжения</p>
+                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
+                        <p className="ptext3">+996 (0553) 577-575</p>
+                    </div>
+
+                    <div className="group4">
+                        {/* <imgName class="group__img" src="./img/Group4.png" alt=""> */}
+                        <p className="evenly">Оправданное доверие наших клиентов</p>
+                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
+                        <p className="ptext3">+996 (0553) 577-575</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section className=" sectionservice works">
+            <h2 className="section_title">Articles & Tips</h2>
+             <p style={{textAlign: 'center'}}>Explore some of the best tips from around the Kyrgyzstan</p> 
+            <div className="container">
+                <div className="prc card-blur">
+                    <div className=" 'price1' card">
+                    <Image width={780} src={bish} alt="bish"/>
+                        <div className="card__bg"> </div>
+                        <div className="ptext1">The best one-day hikes near Bishkek</div>
+                        <p className="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
+                        <p className="pricetext2">Читать больше</p>
+                    </div>
+    
+                    <div className="card price3">
+                    <Image width={780} src={isyklake} alt="isyklake"/>
+                        <div className="card__bg"> </div>
+                        <div className="ptext1">Why you should choose Kyrgyzstan for your next vacation</div>
+                        <p className="">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                        <p className="pricetext2">Читать больше</p>
+                    </div>
+                    <div className=" price2 card">
+                    <Image width={780} src={nomad} alt="bish"/>
+                        <div className="card__bg"> </div>
+                        <div className="ptext1">A guide to Kyrgyz nomad games</div>
+                        <p className="">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+                        <p className="pricetext2">Читать больше</p>
+                    </div>
+    
+                </div>
+                 <button className="downprice">Галерея</button> 
+            </div>
+        </section>
 
       
 

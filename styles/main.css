@@ -1,5 +1,7 @@
 .banner{
   position: relative;
+  width: 100%;
+  min-height: calc(100vh - 100px);
 }
 .home__position{
   position: absolute;
@@ -20,7 +22,7 @@
 .home_carousel{
     width: 100%;
     height: 700px;
-    background: brown;
+    background: rgb(207, 170, 170);
   }
   .slideimg1{
     object-fit: center;

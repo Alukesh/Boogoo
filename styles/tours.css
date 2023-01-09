@@ -1,0 +1,133 @@
+.tour__banner{
+    width: 100%;
+    height: calc(90vh - 90px);
+    position: relative;
+}
+.tour__slider{
+    position: relative;
+    top: -1px;
+    height: calc(90vh - 90px);
+}
+.tour__position{
+    color: white;
+    font-size: 42px;
+    position: absolute;
+    display: flex;
+    width: 80%;
+    top: 30%;
+    left:15%;
+    bottom: 0;
+    
+}
+.tour__position-btn{
+    color: black;
+    background-color: #FFC957;
+    font-size: 20px;
+    border-radius: 3px;
+    border: none;
+    width: 25%;
+    height: 60px;
+    margin-top: 6%;
+}
+
+.tour__info{
+    padding: 120px 0;
+}
+
+.tour__top{}
+
+.tour__description{
+
+}
+.tours__form{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+.tours__modal_inputs{
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.tours__modal_inputs > input {
+border: 1px solid gray;
+    gap: 10px;
+    width: 90%;
+    padding: 14px 5px;
+    margin: 0 auto;
+font-family: 'Poppins', sans-serif;
+}
+.tours__modal_inputs textarea{
+    width: 90%;
+    padding: 14px 5px;
+    margin: 0 auto;
+font-family: 'Poppins', sans-serif;
+    resize: none;
+}
+.tours__modal_button{
+    margin-top: 10px;
+    width: 90%;
+    margin: 0 auto;
+    height: 60px;
+    outline: none;
+    border: none;
+    background: rgb(37, 211, 102);
+    color: rgb(255, 255, 255);
+    font-size: 18px;
+    letter-spacing: 0.1em;
+    border-radius: 8px;
+    transition: 300ms;
+}
+.tours__modal_button:hover{
+    background-color: rgb(29, 169, 80);
+}
+
+@media screen and (max-width: 393px) {
+    .container{
+        width: 90%;
+        
+    }
+    .downprice{
+        max-width: 80%;
+        margin: 0 auto;
+        
+    }
+    .prc{
+        display: flex;
+        flex-direction: column;
+        font-size: 24px;
+        color: black;
+        font-family: 'Poppins', sans-serif;
+    }
+    .pricetext2{
+        font-size: 24px;
+        color: blue;
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer;
+    }
+}
+@media screen and (max-width: 800px) {
+    .container{
+        width: 90%;
+    }
+    .downprice{
+        margin: 50px auto;
+    }
+    .prc{
+        display: flex;
+        flex-direction: column;
+        font-size: 24px;
+        color: black;
+        font-family: 'Poppins', sans-serif;
+    }
+    .pricetext2{
+        font-size: 24px;
+        color: blue;
+        font-family: 'Montserrat', sans-serif;
+        cursor: pointer;
+        margin-bottom: 45px;
+    }
+}

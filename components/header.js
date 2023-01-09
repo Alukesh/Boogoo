@@ -1,39 +1,41 @@
 import  Image  from 'next/image';
 import Link from 'next/link';
-import bish from '../public/bish.png'
+import bish from '../public/bogoo.jpg'
 
 
 
 export default function Header(){
+
+
+    
     return(
         <>
     <header>
-        <div className="headerheader">
-            <p className="slogan">Boogoo KG</p>
-            <div className="around">
-                <p className="question">Нужна помощь? Свяжитесь с нашим экспретом</p>
-                <a href="tel:+996551244141" className="number">+996 (551) 244 141</a>
-            </div>
-        </div>
-        <nav className="navigation">
+    
+       
+    </header>
+    <nav className="navigation">
             <div>
                 <Image className="logo"
                     src={bish}
-                    alt="logo" width={40} height={40} priority/>
+                    alt="logo" width={90} height={160} priority/>
             </div>
             <ul className="ulnav">
-                <Link href={{
+                {/* <Link href={{
                     pathname: '/tours',
                     query: { id: 2, comment: 'asdsa'},
-                }}>asdsa</Link>
-                 <li><a className="nav" href="#">Услуги</a></li>
-                <li><a className="nav" href="#">Главная</a></li>
+                }}>asdsa</Link> */}
+                <Link  className="nav" href={{
+                    pathname: '/'
+                }}>Главная</Link>
                 <li><a className="nav" href="#">Туры</a></li>
-                <li><a className="nav" href="#">Галерея</a></li>
+                <Link  className="nav" href={{
+                    pathname: '/gallery'
+                }}>Галерея</Link>
+                <li><a className="nav" href="#">FAQ</a></li>
                 <li><a className="nav" href="#">Контакты</a></li>
             </ul>
         </nav>
-    </header>
         </>
     )
 }
