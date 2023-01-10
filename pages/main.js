@@ -49,10 +49,19 @@ const  Main = () => {
     return(
         <>
 
-        <video src={videoBg}  autoPlay loop muted  playsInline style={{zIndex:'-1', width: '100%'}}/>
+        <div className='home__banner'>
+            <video src={videoBg}  autoPlay loop muted  playsInline style={{zIndex:'-1', width: '100%'}}/>
+            <form onSubmit={(e) => e.preventDefault()} className='home__form' >
+                <input className='home__form-input' type="text" placeholder="City, place" />
+                <input className='home__form-input' type="text" />
+                <input className='home__form-input' type="text"  placeholder="3"/>
+                <button className='home__form-btn' >Search</button>
+            </form>
+        </div>
+        
         
 
-        <section className='banner'>
+        {/* <section className='banner'>
             <div id="banner">
                 <Carousel autoplay='6.6'  dotPosition={'right'} easing >
                     <div className='home_slider1'>
@@ -71,40 +80,8 @@ const  Main = () => {
                         </div>
                     </div>
             </div>
-        </section>
-        <form onSubmit={(e) => e.preventDefault()} className='form' style={{
-            width: '80%',
-            margin: '0 auto',
-            height: '200px',
-            // background: 'wheat',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-        }}>
-            <input  style={{
-            width: '22%',
-            height: '40px',
-            }} type="text" placeholder="City, place" />
-            <input  style={{
-            width: '22%',
-            height: '40px',
-            }} type="text" />
-            <input  style={{
-            width: '22%',
-            height: '40px',
-            }} type="text"  placeholder="3"/>
-            <button style={{
-            width: '22%',
-            height: '40px',
-            outline: 'none',
-            border: 'none',
-            background: '#25d366',
-            color: '#ffffff',
-            fontSize: '18px',
-            letterSpacing: '0.1em',
-            borderRadius: '8px',
-            }} >Search</button>
-        </form>
+        </section> */}
+       
 
 
         <section className=" sectionservice works">
@@ -132,30 +109,37 @@ const  Main = () => {
                         <div className="card__bot">
                             <span className="pricetext2">1990 сом</span>
                             <span className="card__time">
-                                <Image width={20} className="card__icon" src={clock} alt="time"/>
+                                <Image width={15} className="card__icon" src={clock} alt="time"/>
                                 <span>{t.days} days</span>
                             </span>
                         </div>
                 </Link>
                 )})
             }
-                 <Link href={{ pathname: '/tours',  query: { id: 1, comment: 'asdsa'},
-                 }} className=" card">
-                    <Image width={300} src={bish} alt="bish"/>
-                    <span  className="card__icon card__inf" data-title="Пн-Чт">
-                        <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
-                    </span>
-                    <div className="card__bg"> </div>
-                    <h3 className="card__title">t.name</h3>
-                    <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
-                    <div className="card__bot">
-                        <span className="pricetext2">1990 сом</span>
-                        <span className="card__time">
-                            <Image width={20} className="card__icon" src={clock} alt="time"/>
-                            <span>1 hours</span>
+            {
+                tours?.map(t => {
+                    const src = t.image
+                    return (
+                    <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
+                    }} key={t?.id} className=" card">
+                        <Image width={300} height={400} loader={() => src} src={src} alt="bish"/>
+                        <span  className="card__icon card__inf" data-title="Написать фитбек">
+                            <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
                         </span>
-                    </div>
+                        <div className="card__bg"> </div>
+                        <h3 className="card__title">{t.name}</h3>
+                        <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
+                        <div className="card__bot">
+                            <span className="pricetext2">1990 сом</span>
+                            <span className="card__time">
+                                <Image width={15} className="card__icon" src={clock} alt="time"/>
+                                <span>{t.days} days</span>
+                            </span>
+                        </div>
                 </Link>
+                )})
+            }
+                
                 
                 
 

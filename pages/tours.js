@@ -87,16 +87,18 @@ const  TourPage = () =>{
                     <div className='tour__banner'>
                         <Image loader={() => bgImage}  src={bgImage} fill alt="yui" style={{ objectFit:'cover'}} priority />
                     </div>
-                    <div className='tour__banner'>
-                        <Image loader={() => bgImage} src={bgImage} fill alt="yui" style={{ objectFit:'cover'}} priority />
-                    </div>
-                    <div className='tour__banner'>
-                        <Image loader={() => bgImage} src={bgImage} fill alt="yui" style={{ objectFit:'cover'}} priority />
-                    </div>
+                    {
+                        pageInfo?.images?.map(i => (
+                            <div className='tour__banner'>
+                                <Image loader={() => i.image} src={i.image} fill alt="yui" style={{ objectFit:'cover'}} priority />
+                            </div>
+                        ))
+                    }
+                 
                 </Carousel>
                     <div className="tour__position">
                         <div className="afisha">
-                            <p className="text">Туризм в Кыргызстане </p>
+                            <p className="text">{pageInfo?.name} </p>
                             <p id="line"></p>
                             <p className="text2">asas</p>
                             <button onClick={showModal} className="tour__position-btn">Оставить заявку</button>
@@ -128,7 +130,7 @@ const  TourPage = () =>{
                 {
                     tours?.map(t => {
                         const src = t.image
-                        return (
+                        return pageInfo?.id !== t.id ? (
                         <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
                         }} key={t?.id} className=" card">
                             <Image width={300} height={400} loader={() => src} src={src} alt="bish"/>
@@ -146,7 +148,7 @@ const  TourPage = () =>{
                                 </span>
                             </div>
                     </Link>
-                    )})
+                    ) : ''})
                 }
                      <Link href={{ pathname: '/tours',  query: { id: 1, comment: 'asdsa'},
                      }} className=" card">

@@ -97,10 +97,25 @@ header{
 .navigation {
     display: flex;
     justify-content: center;
-    /* background:#E7E7E7; */
+    background:#E7E7E7;
     position: sticky;
     top: 0;
     z-index: 20;
+}
+header{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    /* text-shadow: 1px 1px 2px grey ; */
+}
+.navigation__lang{
+    position: absolute;
+    top:6px;
+    right:5px;
+    z-index:22;
+    display:flex;
+    align-items:center;
+    gap:5px;
 }
 
 .ulnav {

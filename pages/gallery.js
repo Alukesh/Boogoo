@@ -11,11 +11,11 @@ const Blog = () => {
     return (
         <div>
             <section>
-                <video src={videoBg} autoPlay controls loop playsInline style={{ zIndex: '-1', width: '100%', height: '100vh', objectFit: 'cover'}}/>
+                <video src={videoBg} autoPlay muted loop playsInline style={{ zIndex: '-1', width: '100%', height: '100vh', objectFit: 'cover'}}/>
             </section>
             <section className=" sectionservice works">
             <h2 className="section_title">Articles & Tips</h2>
-            <p>Explore some of the best tips from around the Kyrgyzstan</p>
+            <p style={{textAlign: 'center'}}>Explore some of the best tips from around the Kyrgyzstan</p> 
             <div className="container">
                 <div className="prc card-blur">
                     <div className=" card">

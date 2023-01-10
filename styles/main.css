@@ -8,6 +8,37 @@
   display: flex;
   width: 80%;
 }
+.home__banner{
+  position: relative;
+}
+.home__form{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  width: 80%;
+  margin: 0 auto;
+  height: 200px;
+  /* background: wheat; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center,
+}
+.home__form-input{
+  height: 40px;
+  width: 22%;
+}
+.home__form-btn{
+  width: 22%;
+  height: 40px;
+  outline: none;
+  border: none;
+  background: #25d366;
+  color: white;
+  font-size: 18px;
+  letter-spacing: .1em;
+  border-radius: 8ox;
+}
 .home__parallax{
   height: 550px;
   background-image: url('../public/paralacs.jpg');
