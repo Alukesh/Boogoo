@@ -1,39 +1,56 @@
 import React from 'react';
 import { Collapse } from 'antd';
+import Head from 'next/head'
 
-const Faq = () => {
+
+export const getServerSideProps = async ({locale}) => {
+    
+    const req = await fetch(`http://127.0.0.1:8000/ru/api/v1/faq/`)
+    const res = await req.json()
+
+    if (!res) {
+        return {
+            notFound: true
+        }
+    }
+    return {
+        props: { faq: res.data ,  messages: require(`../lang/${locale}.json`)}
+    }
+}
+
+
+
+
+const Faq = ({faq}) => {
     const { Panel } = Collapse;
-
-    const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
+    console.log(faq);
+  
 
   function onChange(key) {
         console.log(key);
     }
 
     return (
+        <>
+         <Head>
+            <title> Boogoo || FAQ</title>
+        </Head>
+        
         <div className='faq'> 
             <div className='container'>
-                <h2>FAQ</h2>
-                <Collapse defaultActiveKey={['1']} onChange={onChange}>
-                    <Panel header="How to book?" key="Первая панель">
+                <h2>FAQ</h2> <br/><br/>
+                <Collapse style={{fontWeight:'500'}} defaultActiveKey={['0']} onChange={onChange}>
+                    {/* <Panel header="How to book?" key="Первая панель">
                         <p>{text}</p>
-                    </Panel>
-                    <Panel header="What kit do I need?" key="Вторая панель">
-                        <p>{text}</p>
-                    </Panel>
-                    <Panel header='What kind of accommodations I have?' key="Третья панель">
-                        <p>{text}</p>
-                        </Panel>
-                        <Panel header="Water?" key="Четвертая панель панель">
-                        <p>{text}</p>
-                    </Panel>
-                    <Panel header="The trail is able to do by trekking?" key="Пятая панель">
-                        <p>{text}</p>
-                    </Panel>
+                    </Panel> */}
+                    {
+                        faq.map((faqEl, idx) => (
+                            <Panel header={faqEl?.question || 'w'} key={idx}>
+                                <p >{faqEl?.answer}</p>
+                            </Panel>  
+                        ))
+                    }
+{/*                    
                     <Panel header='Notes to know...' key="Шестая панель">
                         <Collapse>
                             <Panel header='This is panel header 6.1'>
@@ -43,12 +60,13 @@ const Faq = () => {
                                 <p>{text}</p>
                             </Panel>
                         </Collapse>
-                    </Panel>
+                    </Panel> */}
                 </Collapse>
-
+                    
             </div>
             
-        </div>
+        </div> <br/><br/><br/>
+        </>
     );
 };
 

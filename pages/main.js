@@ -1,13 +1,21 @@
 import  Image  from 'next/image';
+import { Select, Space } from 'antd';
+
 import { Carousel } from 'antd'
 import React, { useEffect, useState, useRef } from "react";
 import clock from '../public/clock.png';
-import slider1 from '../public/slider1.png'
+import main1 from '../public/main1.png'
+import main2 from '../public/main2.png'
+import main3 from '../public/main3.png'
+import main4 from '../public/main4.png'
+import {VscSearch} from 'react-icons/vsc'
 import slider2 from '../public/slidernew.webp'
 import bish from '../public/bish.png'
 import nomad from '../public/nomad.jpg'
 import isyklake from '../public/isyklake.jpg'
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 
 // export const getServerSideProps = async () => {
@@ -29,18 +37,31 @@ import Link from 'next/link';
 
 const  Main = () => {
 
-    useEffect(() => {
-        // videoBG.current.play()
-    }, [])
+    
+    const onCategoryChange = (value) => {
+    console.log(`selected ${value}`);
+    };
+    
+    const router = useRouter(),
+     locale = router.locale;
+    const [search, setSearch] = useState('')
+    const [oneDay, setOneDay] = useState('')
+
         const [tours, setTours] = useState()
+        const [places, setPlaces] = useState([])
     useEffect(()=>{
         const fetchdata = async () => {
-            const req = await fetch('http://127.0.0.1:8000/ru/api/v1/tours/?is_draft=false')
+            const req = await fetch(`http://127.0.0.1:8000/${locale || 'ru'}/api/v1/tours/?is_draft=false&is_top=true&limit=6`)
             const res = await req.json()
-            setTours(res.data)
-            console.log(res.data);
+            setTours(res.data.results)
         }
         fetchdata()
+        const fetchPlaces = async () => { 
+            const req = await fetch(`http://127.0.0.1:8000/${locale || 'ru'}/api/v1/places/?limit=3`)
+            const res = await req.json()
+            setPlaces(res.data.results)
+        }
+        fetchPlaces()
     },[])
     
 
@@ -48,44 +69,60 @@ const  Main = () => {
 
     return(
         <>
+        <Head>
+            <title> Boogoo || Главная страница</title>
+        </Head>
+        <div className="main">
 
-        <div className='home__banner'>
-            <video src={videoBg}  autoPlay loop muted  playsInline style={{zIndex:'-1', width: '100%'}}/>
-            <form onSubmit={(e) => e.preventDefault()} className='home__form' >
-                <input className='home__form-input' type="text" placeholder="City, place" />
-                <input className='home__form-input' type="text" />
-                <input className='home__form-input' type="text"  placeholder="3"/>
-                <button className='home__form-btn' >Search</button>
-            </form>
+        <div className='home'>
+            <div className='home__banner'>
+                <video src={videoBg}  autoPlay loop muted  playsInline style={{zIndex:'-1', width: '100%'}}/>
+                <form onSubmit={(e) => e.preventDefault()} className='home__form' >
+                    <div className={'home__form-inputs'}>
+                        <Select
+                        size='large'
+                        dropdownMatchSelectWidth={true}
+                            defaultValue="lucy"
+                            // style={{width: 140}}
+                            // onChange={onCategoryChange}
+                            options={[
+                                {
+                                value: 'jack',
+                                label: 'Доспримечательности',
+                                },
+                                {
+                                value: 'lucy',
+                                label: 'Киберпрогрессивностатичный',
+                                },
+                            ]}
+                            />
+                        <Select
+                        size='large'
+                        dropdownMatchSelectWidth={true}
+                            defaultValue={true}
+                            // style={{width: 200}}
+                            onChange={e => setOneDay(e)}
+                            options={[
+                                {
+                                value: true,
+                                label: 'однодневные',
+                                },
+                                {
+                                    value: false,
+                                    label: 'многодневные',
+                                },
+                            ]}
+                            />
+                    </div>
+                    <input value={search} onChange={(e) => setSearch(e.target.value)} className='home__form-input' type="text" placeholder="City, place" />
+                    <Link href={{pathname:'/allTours', query: {search: search, is_one_day: oneDay}}} className='home__form-btn' >Найти <VscSearch/></Link>
+                </form>
+            </div>
         </div>
         
-        
-
-        {/* <section className='banner'>
-            <div id="banner">
-                <Carousel autoplay='6.6'  dotPosition={'right'} easing >
-                    <div className='home_slider1'>
-                        <Image className='slideimg1' src={slider1} alt='asa' unoptimized style={{width:'100%', height: '700px'}} />
-                    </div>
-                    <div className={'home_slider1'}>
-                        <Image className={'slideimg1'} src={slider2} alt='asa' unoptimized style={{width:'100%', height: '700px'}} />
-                    </div>
-                </Carousel>
-                    <div className="home__position">
-                        <div className="afisha">
-                            <p className="text">Туризм в Кыргызстане </p>
-                            <p id="line"></p>
-                            <p className="text2">asas</p>
-                            <button className="button2">Оставить заявку</button>
-                        </div>
-                    </div>
-            </div>
-        </section> */}
-       
-
 
         <section className=" sectionservice works">
-            <h2 className="section_title">Наш прайс</h2>
+            <h2 className="section_title">Наши туры</h2>
 
         </section>
         <div className="container">
@@ -98,22 +135,61 @@ const  Main = () => {
                     const src = t.image
                     return (
                     <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
-                    }} key={t?.id} className=" card">
-                        <Image width={300} height={400} loader={() => src} src={src} alt="bish"/>
-                        <span  className="card__icon card__inf" data-title="Написать фитбек">
-                            <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
-                        </span>
-                        <div className="card__bg"> </div>
-                        <h3 className="card__title">{t.name}</h3>
-                        <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
-                        <div className="card__bot">
-                            <span className="pricetext2">1990 сом</span>
-                            <span className="card__time">
-                                <Image width={15} className="card__icon" src={clock} alt="time"/>
-                                <span>{t.days} days</span>
-                            </span>
+                    }} key={t?.id} className=" card card__best">
+                        <div className='card__imgBox'>
+                            <Image className='card__img' width={300} height={400} loader={() => src} unoptimizied src={src} alt="bish"/>
+                        </div>
+                        {/* <span  className="card__icon card__geo" data-title={t.tags.join(', ')}>
+                            <img className="card__icon" src={'/gps.png'}/>
+                        </span> */}
+                        <div className='card__inf'>
+                            <div className="card__bg"> </div>
+                            <h3 className="card__title">{t.name}</h3>
+                            {/* <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p> */}
+                            <div className="card__bot">
+                                <span className="card__tags">
+                                    {
+                                        t.tags.map((str , idx)=> (
+                                            <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
+                                        ))
+                                    }
+                                </span>
+                                <span className="card__time">
+                                    <Image width={50} className="card__icon" src={clock}  unoptimized alt="time"/>
+                                    <span>{t.days} days</span>
+                                </span>
+                            </div> 
                         </div>
                 </Link>
+                )})
+            }
+              {
+                tours?.map(t => {
+                    const src = t.image
+                    return (
+                    <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
+                    }} key={t?.id} className="card card__best">
+                        <div className='card__imgBox'>
+                            <Image className='card__img' width={300} height={400} loader={() => src}   loading="lazy" src={src} alt="bish"/>
+                        </div>
+                        <div className='card__inf'>
+                            <div className="card__bg"> </div>
+                            <h3 className="card__title">{t.name}</h3>
+                            <div className="card__bot">
+                                <span className="card__tags">
+                                    {
+                                        t.tags.map((str , idx)=> (
+                                            <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
+                                        ))
+                                    }
+                                </span>
+                                <span className="card__time">
+                                    <Image width={50} className="card__icon" loading="lazy" src={clock} alt="time"/>
+                                    <span>{t.days} days</span>
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
                 )})
             }
             {
@@ -121,22 +197,31 @@ const  Main = () => {
                     const src = t.image
                     return (
                     <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
-                    }} key={t?.id} className=" card">
-                        <Image width={300} height={400} loader={() => src} src={src} alt="bish"/>
-                        <span  className="card__icon card__inf" data-title="Написать фитбек">
-                            <img className="card__icon" src="https://img.icons8.com/ios/50/null/information--v1.png"/>
-                        </span>
-                        <div className="card__bg"> </div>
-                        <h3 className="card__title">{t.name}</h3>
-                        <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
-                        <div className="card__bot">
-                            <span className="pricetext2">1990 сом</span>
-                            <span className="card__time">
-                                <Image width={15} className="card__icon" src={clock} alt="time"/>
-                                <span>{t.days} days</span>
-                            </span>
+                    }} key={t?.id} className="card card__best">
+                        <div className='card__imgBox'>
+                            <Image className='card__img' width={300} height={400} loading="lazy"  loader={() => src} src={src} alt="bish"/>
                         </div>
-                </Link>
+                        <div className='card__inf'>
+                            <div className="card__bg">
+                                {/* <div className={'card__bg-title'}>ENJOY EVERY MOMENT</div> */}
+                                {/* <div>sa</div> */}
+                            </div>
+                            <h3 className="card__title">{t.name}</h3>
+                            <div className="card__bot">
+                                <span className="card__tags">
+                                    {
+                                        t.tags.map((str , idx)=> (
+                                            <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
+                                        ))
+                                    }
+                                </span>
+                                <span className="card__time">
+                                    <Image width={50} className="card__icon"loading="lazy"  src={clock} alt="time"/>
+                                    <span>{t.days} days</span>
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
                 )})
             }
                 
@@ -146,7 +231,10 @@ const  Main = () => {
                 
 
             </div>
-            <button className="downprice">Все туры</button>
+            <Link href={{pathname: '/allTours', query:{search: ''}}}>
+                <button className="downprice">Все туры</button>
+            </Link>
+            
         </div>
 
       
@@ -160,37 +248,38 @@ const  Main = () => {
             <div className="container">
                 <div className="group">
                     <div className="group1">
-                        {/* <imgName class="group__img" src="./img/Group1.png" alt=""> */}
+                        <Image width={120} height={120} className="group__img" loading="lazy"  src={main1} alt="Туризм по духу"/>
                         <p className="ptext1">Туризм по духу</p>
-                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
-                        <p className="ptext3">+996 (0553) 577-575</p>
+                       
                     </div>
 
 
                     <div className="group2">
-                        {/* <imgName class="group__img" src="./img/Group2.png" alt=""> */}
+                        <Image width={180} height={130} className="group__img" loading="lazy" src={main2} alt="Туризм по духу"/>
                         <p className="ptext1">Доступные предложения по цене</p>
-                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
-                        <p className="ptext3">+996 (0553) 577-575</p>
+                      
                     </div>
 
                     <div className="group3">
-                        {/* <imgName class="group__img" src="./img/Group3.png" alt=""> */}
+                    <Image width={80} height={110} className="group__img" loading="lazy" src={main3} alt="Туризм по духу"/>
                         <p className="ptext1">Отдых без напряжения</p>
-                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
-                        <p className="ptext3">+996 (0553) 577-575</p>
+                        
                     </div>
 
                     <div className="group4">
-                        {/* <imgName class="group__img" src="./img/Group4.png" alt=""> */}
+                        <Image width={80} height={110} className="group__img"  loading="lazy"src={main4} alt="Туризм по духу"/>
                         <p className="evenly">Оправданное доверие наших клиентов</p>
-                        <p className="ptext2">Хотите узнать подробность, телефон для связи:</p>
-                        <p className="ptext3">+996 (0553) 577-575</p>
+                        
                     </div>
                 </div>
-
+                <div style={{textAlign: 'center'}}>
+                    <strong>
+                    <p className="ptext4">Хотите узнать подробность, <br/> телефон для связи:</p>
+                    <a className="ptext3" href='tel:9960553577575'>+996 (0553) 577-575</a>
+                    </strong>
+                </div>
             </div>
-        </section>
+        </section> <br/><br/>
 
 
         <section className=" sectionservice works">
@@ -198,48 +287,40 @@ const  Main = () => {
              <p style={{textAlign: 'center'}}>Explore some of the best tips from around the Kyrgyzstan</p> 
             <div className="container">
                 <div className="prc card-blur">
-                    <div className=" 'price1' card">
-                    <Image width={780} src={bish} alt="bish"/>
-                        <div className="card__bg"> </div>
-                        <div className="ptext1">The best one-day hikes near Bishkek</div>
-                        <p className="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
-                        <p className="pricetext2">Читать больше</p>
-                    </div>
-    
-                    <div className="card price3">
-                    <Image width={780} src={isyklake} alt="isyklake"/>
-                        <div className="card__bg"> </div>
-                        <div className="ptext1">Why you should choose Kyrgyzstan for your next vacation</div>
-                        <p className="">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                        <p className="pricetext2">Читать больше</p>
-                    </div>
-                    <div className=" price2 card">
-                    <Image width={780} src={nomad} alt="bish"/>
-                        <div className="card__bg"> </div>
-                        <div className="ptext1">A guide to Kyrgyz nomad games</div>
-                        <p className="">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                        <p className="pricetext2">Читать больше</p>
-                    </div>
+                    {
+                        places?.map( t => (
+                            <Link href={{ pathname: '/place',  query: { id: t.id, comment: 'asdsa'},}} className={"card price3"}>
+                                <Image loader={() => t.image} src={t.image} alt="asf" width={1920} height={380} />
+                                <div className="card__bg"> </div>
+                                <div className="ptext1">{t.name}</div>
+                                <p className="">{t.description?.slice(0,121)}</p>
+                                <p className="pricetext2">Читать больше</p>
+                            </Link>
+                        ))
+                    }
     
                 </div>
-                 <button className="downprice">Галерея</button> 
+                <Link href={{pathname: '/gallery'}}>
+                    <button className="downprice">Галерея</button>
+                </Link>
             </div>
         </section>
 
       
 
+        </div>
         </>
     )
 }
 
-Main.getInitialProps = async ()=>{
-    const req = await fetch('https://jsonplaceholder.typicode.com/users')
-    const users = await req.json()
+// Main.getInitialProps = async ()=>{
+//     const req = await fetch('http://127.0.0.1:8000/ru/api/v1/tours/?is_draft=false')
+//     const tours = await req.json()
 
 
-    return {users: users}
+//     return {tours: tours}
 
- }
+//  }
 
 
 

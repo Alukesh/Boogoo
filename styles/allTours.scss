@@ -1,0 +1,39 @@
+.alltours__card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+text-align: baseline;
+flex-wrap: wrap;
+}
+.alltours__cardBg{
+    width: 300px;
+    height: 200px;
+    position: relative;
+}
+.altours__card-geo{
+    position: absolute;
+        bottom: 10px;
+        // top: 100px;
+        left: 10px;
+        background-color: #ffffff99;
+        text-align: center;
+        border-radius: 50%;
+}
+.prc {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    // grid-template-rows: repeat(3,1fr);
+    gap: 20px;
+}
+
+
+@media (max-width: 700px) {
+    .prc{
+        grid-template-columns: repeat( 2, 1fr);
+    }
+}
+@media (max-width: 580px) {
+    .prc{
+        grid-template-columns: repeat( 1, 1fr);
+    }
+}
