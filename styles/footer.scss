@@ -1,99 +1,55 @@
 
-// .footer {
-//     background-color: #3A3A3A;
-//     display: flex;
-//     margin-top: 6%;
-//     color: #FFFFFF;
-//     justify-content: space-between;
-//     /* height: 324px; */
-//     padding-top: 5%;
-// }
-
-// .position {
-//     display: flex;
-// }
-
-// .h1text {
-//     font-family: 'Gilroy';
-//     font-style: normal;
-//     font-weight: 600;
-//     font-size: 16px;
-//     line-height: 19px;
-//     margin-bottom: 8%;
-// }
-
-// .footertext1 {
-//     width: 25%;
-// }
-
-// .footertext2 {
-//     width: 25%;
-//     padding-left: 5%;
-// }
-
-// .footertext3 {
-//     width: 25%;
-
-// }
-
-// .footertext4 {
-//     width: 25%;
-
-// }
-
-// .inst {
-//     margin: 5% auto;
-//     color: #BCBBBB;
-//     font-family: 'Gilroy';
-//     font-style: normal;
-//     font-weight: 600;
-//     font-size: 16px;
-//     line-height: 19px;
-// }
-
-// .loremtext {
-//     margin: 5% auto;
-//     color: #BCBBBB;
-//     font-family: 'Gilroy';
-//     font-style: normal;
-//     font-weight: 600;
-//     font-size: 15px;
-//     line-height: 19px;
-
-// }
-
-// .func {
-//     background-color: red;
-//     width: 200px;
-//     height: 200px;
-//     border-radius: 3px;
-//     position: fixed;
-//     display: none;
-// }
-
-// .func.active {
-//     display: block;
-// }
-
-.footer {
-    background: rgba(20, 26, 32, 1);
+.footer{
+  background: url('../public/slide3.jpg') center/cover no-repeat;
+  background: rgba(20, 26, 32, 1);
     color: rgba(255, 255, 255, 1);
-    padding-top: 5%;
+    padding-top: 3%;
+    text-shadow: 1px 2px 2px black;
     // margin-top: 6%;
   
-    &__info {
+    &__info{
       display: flex;
-      column-gap: 65px;
-      padding: 40px 0;
-  
-      & img {
-        margin-bottom: 16px;
+      column-gap: 12%;
+      padding: 40px 0 20px;
+      justify-content: space-between;
+      &_inputs{
+        display: flex;
+        flex-direction: column;
+        input, textarea{
+          background: none;
+          border-radius: 2px;
+          // color: grey;
+          color: white;
+          margin-bottom: 8px;
+          outline: none;
+          border: none;
+          border-bottom: 1px solid #f3f3f3;
+          resize: none;
+          width: 220px;
+          display: block;
+          padding: 11px 16px;
+          &::placeholder{
+            // color: white;
+          }
+        }
+      }
+      &-btn{
+        background-color: #0091d9;
+        padding: 11px 12px;
+        &:hover{
+          filter: saturate(2)
+        }
+      }
+      
+
+      &-logo{
+        margin: -80px 20px -45px -20px; 
       }
   
       &-text {
         max-width: 250px;
         font-family: OpenSans, sans-serif;
-        font-size: 11px;
+        font-size: 16px;
         line-height: 19px;
         text-align: left;
   
@@ -103,10 +59,10 @@
         display: flex;
         column-gap: 32px;
         font-family: OpenSans, sans-serif;
-        font-size: 11px;
+        font-size: 13px;
         line-height: 25px;
+        font-weight: 500;
         letter-spacing: 0.8461539149284363px;
-        font-weight: 600;
       }
   
       &-list {
@@ -117,9 +73,26 @@
       &-contact{
         display: flex;
         &-social{
-          display: flex;
-          padding: 30px 0 0 46px;
+          // display: flex;
+          padding: 3px 0 0 4px;
           column-gap: 25px;
+          height: 90px;
+          max-width: 216px;
+          div{
+            display: flex;
+            justify-content: center;
+            align-items: start;
+          }
+          .icon{
+            font-size: 24px;
+            line-height: 24px;
+            color: silver;
+            margin: 2px 8px;
+          }
+          .icon:hover{
+            // font-size: 22px;
+            color: white;
+          }
         }
       }
   
@@ -127,22 +100,26 @@
         display: flex;
         flex-direction: column;
         font-family: OpenSans, sans-serif;
-        font-size: 11px;
+        font-size: 13px;
         line-height: 16px;
-        letter-spacing: 0.8461539149284363px;
+        max-width: 242px;
+        // letter-spacing: 1.1461539149284363px;
   
         &-link {
           margin-bottom: 16px;
-          max-width: 141px;
+          // max-width: 141px;
           padding-right: 20px;
+        }
+        &-link:hover{
+          color: silver;
         }
       }
       &-title{
         font-family: OpenSans,sans-serif;
-        font-size: 11px;
+        font-size: 16px;
         line-height: 13px;
         letter-spacing: 0.8461539149284363px;
-        margin-bottom: 15px;
+        margin-bottom: 30px;
         font-weight: 500;
       }
     }

@@ -107,8 +107,8 @@
     &__bg{
       // background: linear-gradient(0deg, rgb(99, 99, 254) 80%, rgb(255, 255, 255) 100%);
       // background-color: rgb(159, 150, 150);
-      background-color: #00A4E5;
-      background-color: #00A4E5;
+      // background-color: #00A4E5;
+      // background-color: #00A4E5;
     }
     &__info{
       padding: 20px 40px;
@@ -118,3 +118,47 @@
     }
 
   }
+
+
+  @media (max-width: 990px) {
+    .main__story-block{
+      padding: 15px 0 150px 10px;
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 888px) {
+  }
+  @media (max-width: 790px) {
+    .main {
+      &__story {
+        &-box {
+          column-gap: 31px;
+          flex-wrap: wrap;
+          justify-content: center;
+          row-gap: 20px;
+        }
+      }
+    }
+  }
+  
+  @media (max-width: 680px) {
+    .main__story-textabove br{
+      display: none;
+    }
+  }
+  
+  @media (max-width: 622px) {
+    .main__story-blocks{
+      width: 80%;
+    }
+
+}
+  
+  @media (max-width: 360px) {
+   
+    .main__story-blocks{
+      width: 100%;
+    }
+   
+}

@@ -63,7 +63,7 @@ export default function Header(props){
             <Link href={{pathname: '/'}}>
                 <Image className="logo"
                         src={'/bugu_travel_logo1.jpg'}
-                        alt="logo" width={190} height={160} priority/>
+                        alt="logo" width={290} height={260} priority/>
             </Link>
                
             </div>

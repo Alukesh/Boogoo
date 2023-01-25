@@ -46,24 +46,33 @@ const  Main = () => {
      locale = router.locale;
     const [search, setSearch] = useState('')
     const [oneDay, setOneDay] = useState('')
+    const [searchCategory, setSearchCategory] = useState('')
 
         const [tours, setTours] = useState()
         const [places, setPlaces] = useState([])
+        const [categories, setCategories] = useState([])
     useEffect(()=>{
         const fetchdata = async () => {
-            const req = await fetch(`http://127.0.0.1:8000/${locale || 'ru'}/api/v1/tours/?is_draft=false&is_top=true&limit=6`)
+            const req = await fetch(`http://127.0.0.1:8000/${locale }/api/v1/tours/?is_draft=false&is_top=true`)
             const res = await req.json()
-            setTours(res.data.results)
+            setTours(res.data)
         }
         fetchdata()
+        const fetchCategories = async () => {
+            const req = await fetch(`http://127.0.0.1:8000/${locale || 'ru'}/api/v1/categories/`)
+            const res = await req.json()
+            setCategories(res?.data)
+        }
+        fetchCategories()
         const fetchPlaces = async () => { 
             const req = await fetch(`http://127.0.0.1:8000/${locale || 'ru'}/api/v1/places/?limit=3`)
             const res = await req.json()
             setPlaces(res.data.results)
         }
+
         fetchPlaces()
     },[])
-    
+    console.log(categories);
 
     const videoBg = '/ktour.mp4'
 
@@ -82,19 +91,14 @@ const  Main = () => {
                         <Select
                         size='large'
                         dropdownMatchSelectWidth={true}
-                            defaultValue="lucy"
-                            // style={{width: 140}}
-                            // onChange={onCategoryChange}
-                            options={[
+                            defaultValue="Категория"
+                            onChange={e => setSearchCategory(e)}
+                            options={categories?.map(c => (
                                 {
-                                value: 'jack',
-                                label: 'Доспримечательности',
-                                },
-                                {
-                                value: 'lucy',
-                                label: 'Киберпрогрессивностатичный',
-                                },
-                            ]}
+                                    value: c.name,
+                                    label: c.name
+                                }
+                            ))}
                             />
                         <Select
                         size='large'
@@ -115,7 +119,7 @@ const  Main = () => {
                             />
                     </div>
                     <input value={search} onChange={(e) => setSearch(e.target.value)} className='home__form-input' type="text" placeholder="City, place" />
-                    <Link href={{pathname:'/allTours', query: {search: search, is_one_day: oneDay}}} className='home__form-btn' >Найти <VscSearch/></Link>
+                    <Link href={{pathname:'/allTours', query: {search: search, is_one_day: oneDay, category: searchCategory}}} className='home__form-btn' >Найти <VscSearch/></Link>
                 </form>
             </div>
         </div>
@@ -143,7 +147,9 @@ const  Main = () => {
                             <img className="card__icon" src={'/gps.png'}/>
                         </span> */}
                         <div className='card__inf'>
-                            <div className="card__bg"> </div>
+                            <div className="best">
+                                <p>Best</p>
+                            </div>
                             <h3 className="card__title">{t.name}</h3>
                             {/* <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p> */}
                             <div className="card__bot">
@@ -173,7 +179,9 @@ const  Main = () => {
                             <Image className='card__img' width={300} height={400} loader={() => src}   loading="lazy" src={src} alt="bish"/>
                         </div>
                         <div className='card__inf'>
-                            <div className="card__bg"> </div>
+                            <div className="best">
+                                <p>Best</p>
+                            </div>
                             <h3 className="card__title">{t.name}</h3>
                             <div className="card__bot">
                                 <span className="card__tags">
@@ -202,9 +210,8 @@ const  Main = () => {
                             <Image className='card__img' width={300} height={400} loading="lazy"  loader={() => src} src={src} alt="bish"/>
                         </div>
                         <div className='card__inf'>
-                            <div className="card__bg">
-                                {/* <div className={'card__bg-title'}>ENJOY EVERY MOMENT</div> */}
-                                {/* <div>sa</div> */}
+                            <div className="best">
+                                <p>Best</p>
                             </div>
                             <h3 className="card__title">{t.name}</h3>
                             <div className="card__bot">
@@ -289,7 +296,7 @@ const  Main = () => {
                 <div className="prc card-blur">
                     {
                         places?.map( t => (
-                            <Link href={{ pathname: '/place',  query: { id: t.id, comment: 'asdsa'},}} className={"card price3"}>
+                            <Link key={t?.id} href={{ pathname: '/place',  query: { id: t.id, comment: 'asdsa'},}} className={"card price3"}>
                                 <Image loader={() => t.image} src={t.image} alt="asf" width={1920} height={380} />
                                 <div className="card__bg"> </div>
                                 <div className="ptext1">{t.name}</div>

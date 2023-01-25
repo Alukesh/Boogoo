@@ -228,7 +228,19 @@ header{
     margin-right: 20%;
 }
 
-
+.navigation__menu-list a{
+    &.active{
+        font-stretch: expanded;
+        background-color: #0091d9;
+        color: white;
+        border-radius: 10px;
+        transition: all .4s;
+    }
+    &:hover:not(.active){
+        color: #0091d9;
+        border-bottom: 2px solid #0091d9;
+    }
+}
 .ulnav a {
     text-decoration: none;
     font-family: 'Montserrat';

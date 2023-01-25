@@ -9,16 +9,25 @@ import { Collapse } from 'antd';
 const { Panel } = Collapse;
 import Head from 'next/head'
 
-export function getStaticProps({locale}){
+
+export async function getServerSideProps(context){
+  const {locale, query} = context;
+  const req = await fetch(`http://127.0.0.1:8000/${locale}/api/v1/places/${query.id}/`)
+  const res = await req.json()
+  //  setPageInfo(res.data)
+
+  
+
   return {
-    props: {
-      messages: require(`../lang/${locale}.json`)
-    }
+      props: {
+          messages:  require(`../lang/${locale}.json`),
+          pageInfo: res.data,
+      }
   }
 }
 
 
-const place = () => {
+const place = ({pageInfo}) => {
   const [lorem, setLorem] = useState('aist_lorem1200')
   const [gal, setGal] = useState('aist_gallery_none')
   const [visible, setVisible] = useState(false)
@@ -31,29 +40,8 @@ const place = () => {
     setGal('aist_gallery_none')
     setLorem('aist_lorem1200')
   }
-    const router = useRouter(),
-    {id, comment} = router.query,
-    [pageInfo, setPageInfo] = useState({});
-
-
-    const fetchTour = async () => {
-        const req = await fetch(`http://127.0.0.1:8000/ru/api/v1/places/${id}/`)
-        const res = await req.json()
-         setPageInfo(res.data)
-         console.log(res.data);
-    }
-     useEffect(() => {
-        fetchTour();
-     },[id])
-
-     const changeHandler = (key) => {
-      console.log(key);
-    };
-    const text = `
-    A dog is a type of domesticated animal.
-    Known for its loyalty and faithfulness,
-    it can be found as a welcome guest in many households across the world.
-  `;
+  
+   
      
   
       return (
@@ -82,32 +70,32 @@ const place = () => {
                   <p>{pageInfo?.description}</p>
              </div>
               <div className={`${gal} place__gall`} >
-                <div class="row">
-                  <div class="column">
+                <div className="row">
+                  <div className="column">
                     {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg  src={inf.image} />
+                      pageInfo?.images?.map((inf, idx) =>(
+                        <NewImg key={idx} src={inf.image} />
                       ))
                     }
                   </div>
-                  <div class="column">
-                    {
-                        pageInfo?.images?.map(inf =>(
-                          <NewImg  src={inf.image} />
-                        ))
-                      }
-                  </div>
-                  <div class="column">
-                    {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg  src={inf.image} />
+                  <div className="column">
+                  {
+                      pageInfo?.images?.map((inf, idx) =>(
+                        <NewImg key={idx} src={inf.image} />
                       ))
                     }
                   </div>
-                  <div class="column">
-                    {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg  src={inf.image} />
+                  <div className="column">
+                  {
+                      pageInfo?.images?.map((inf, idx) =>(
+                        <NewImg key={idx} src={inf.image} />
+                      ))
+                    }
+                  </div>
+                  <div className="column">
+                  {
+                      pageInfo?.images?.map((inf, idx) =>(
+                        <NewImg key={idx} src={inf.image} />
                       ))
                     }
                   </div>
@@ -122,8 +110,8 @@ const place = () => {
                   <div style={{display: 'none'}}>
                    <NewImg.PreviewGroup preview={{visible,onVisibleChange: (vis) => setVisible(vis),}} >
                     {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg style={{display: 'none'}} src={inf.image} />
+                      pageInfo?.images?.map((inf, idx) =>(
+                        <NewImg key={idx} style={{display: 'none'}} src={inf.image} />
                       ))
                     }
                     </NewImg.PreviewGroup>

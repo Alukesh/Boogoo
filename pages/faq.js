@@ -5,7 +5,7 @@ import Head from 'next/head'
 
 export const getServerSideProps = async ({locale}) => {
     
-    const req = await fetch(`http://127.0.0.1:8000/ru/api/v1/faq/`)
+    const req = await fetch(`http://127.0.0.1:8000/${locale}/api/v1/faq/`)
     const res = await req.json()
 
     if (!res) {
@@ -50,17 +50,6 @@ const Faq = ({faq}) => {
                             </Panel>  
                         ))
                     }
-{/*                    
-                    <Panel header='Notes to know...' key="Шестая панель">
-                        <Collapse>
-                            <Panel header='This is panel header 6.1'>
-                                <p>{text}</p>
-                            </Panel>
-                            <Panel header='This is panel header 6.2'>
-                                <p>{text}</p>
-                            </Panel>
-                        </Collapse>
-                    </Panel> */}
                 </Collapse>
                     
             </div>

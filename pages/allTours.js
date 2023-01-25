@@ -1,14 +1,12 @@
 import  Image  from 'next/image';
 import { Carousel } from 'antd'
 import React, { useEffect, useState, useRef } from "react";
-import clock from '../public/clock.png';
+import {VscSearch} from 'react-icons/vsc'
 import slider1 from '../public/slide1.jpg'
 import slider2 from '../public/slide2.jpg'
 import slider3 from '../public/slide3.jpg'
 import slider4 from '../public/slide4.jpg'
-import bish from '../public/bish.png'
-import nomad from '../public/nomad.jpg'
-import isyklake from '../public/isyklake.jpg'
+import { Select, Space } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
@@ -34,20 +32,31 @@ export function getStaticProps({locale}){
 
 const  allTours = (props) => {
     const router = useRouter(),
-    {search, tag} = router.query
+    {search, tag, is_one_day,category} = router.query
 
     const t = useTranslations('header')
 
 
     const [tours, setTours] = useState()
+    const [categories, setCategories] = useState([])
+    const [searchText, setSearchText] = useState('')
+    const [oneDay, setOneDay] = useState('')
+    const [searchCategory, setSearchCategory] = useState('')
     useEffect(()=>{
         const fetchdata = async () => {
-            const req = await fetch(`http://127.0.0.1:8000/ru/api/v1/tours/?is_draft=false&search=${search}&tags__name=${tag || ''}`)
+            const req = await fetch(`http://127.0.0.1:8000/${router.locale }/api/v1/tours/?is_draft=false&search=${search}&tags__name=${tag || ''}&is_one_day=${is_one_day || ''}&category__name=${category || ''}`)
             const res = await req.json()
             setTours(res.data)
         }
         fetchdata()
-    },[search])
+        
+        const fetchCategories = async () => {
+            const req = await fetch(`http://127.0.0.1:8000/${router.locale }/api/v1/categories/`)
+            const res = await req.json()
+            setCategories(res?.data)
+        }
+        fetchCategories()
+    },[search, is_one_day, category])
     
 
     const videoBg = '/ktour.mp4'
@@ -74,14 +83,48 @@ const  allTours = (props) => {
                     </div>
 
                 </Carousel>
-                
+                <form onSubmit={(e) => e.preventDefault()} className='home__form' >
+                    <div className={'home__form-inputs'}>
+                        <Select
+                        size='large'
+                        dropdownMatchSelectWidth={true}
+                            defaultValue="Категория"
+                            onChange={e => setSearchCategory(e)}
+                            options={categories?.map(c => (
+                                {
+                                    value: c.name,
+                                    label: c.name
+                                }
+                            ))}
+                            />
+                        <Select
+                        size='large'
+                        dropdownMatchSelectWidth={true}
+                            defaultValue={true}
+                            // style={{width: 200}}
+                            onChange={e => setOneDay(e)}
+                            options={[
+                                {
+                                value: true,
+                                label: 'однодневные',
+                                },
+                                {
+                                    value: false,
+                                    label: 'многодневные',
+                                },
+                            ]}
+                            />
+                    </div>
+                    <input value={searchText} onChange={(e) => setSearchText(e.target.value)} className='home__form-input' type="text" placeholder="City, place" />
+                    <Link href={{pathname:'/allTours', query: {search: searchText, is_one_day: oneDay, category: searchCategory}}} className='home__form-btn' >Найти <VscSearch/></Link>
+                </form>
             </div>
         </section>
        <br/>
-
+       
 
         <section className=" sectionservice works">
-            <h2 className="section_title">Все туры</h2>
+            <h2 className="section_title">{tours?.length ?'Все туры' : 'Туры не найдены'}</h2>
 
         </section>
         <div className="container">
@@ -94,14 +137,14 @@ const  allTours = (props) => {
                     const src = t.image
                     return (
                         <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'}}}
-                        key={t?.id} class="alltours__card card">
-                        <div class="images-block" style={{height:'100%'}}>
+                        key={t?.id} className="alltours__card card">
+                        <div className="images-block" style={{height:'100%'}}>
                         <Image className='alltours__cardBg'  width={300} height={350} loader={() => src} src={src} alt="bish"/>
-                            <span class="images-block__info">
-                            <span class="icon icon-logo hidden-sm"></span>
-                            <span class="images-block__info-bottom">
-                                <span class="alltours__card-text">{t.name}</span>
-                                <span class="images-block__amount"></span>
+                            <span className="images-block__info">
+                            <span className="icon icon-logo hidden-sm"></span>
+                            <span className="images-block__info-bottom">
+                                <span className="alltours__card-text">{t.name}</span>
+                                <span className="images-block__amount"></span>
                                 <span className="card__tags">
                                     {
                                         t.tags.map((str , idx)=> (
@@ -120,14 +163,14 @@ const  allTours = (props) => {
                     const src = t.image
                     return (
                         <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'}}}
-                        key={t?.id} class="alltours__card card">
-                        <div class="images-block" style={{height:'100%'}}>
+                        key={t?.id} className="alltours__card card">
+                        <div className="images-block" style={{height:'100%'}}>
                         <Image className='alltours__cardBg'  width={300} height={50} loader={() => src} src={src} alt="bish"/>
-                            <span class="images-block__info">
-                            <span class="icon icon-logo hidden-sm"></span>
-                            <span class="images-block__info-bottom">
-                                <span class="alltours__card-text">{t.name}</span>
-                                <span class="images-block__amount"></span>
+                            <span className="images-block__info">
+                            <span className="icon icon-logo hidden-sm"></span>
+                            <span className="images-block__info-bottom">
+                                <span className="alltours__card-text">{t.name}</span>
+                                <span className="images-block__amount"></span>
                                 <span className="card__tags">
                                     {
                                         t.tags.map((str , idx)=> (
@@ -172,7 +215,7 @@ const  allTours = (props) => {
                     const src = t.image
                     return (
                     <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'}}}
-                         key={t?.id} class="alltours__card card">
+                         key={t?.id}    "alltours__card card">
                         <div class="images-block" >
                         <Image className='altours__card-bg' fill loader={() => src} src={src} alt="bish"/>
                             <span class="images-block__info">

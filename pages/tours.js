@@ -14,20 +14,33 @@ import {  Modal } from 'antd';
 import axios from 'axios';
 import Head from 'next/head';
 
-export function getStaticProps({locale}){
+
+
+  export async function getServerSideProps(context){
+    const {locale, query} = context;
+    const req = await fetch(`http://127.0.0.1:8000/${locale}/api/v1/tours/${query.id}/`)
+    const res = await req.json()
+
+    
+
     return {
-      props: {
-        messages: require(`../lang/${locale}.json`)
-      }
+        props: {
+            messages:  require(`../lang/${locale}.json`),
+            pageInfo: res.data,
+        }
     }
   }
 
 
-const  TourPage = () =>{
+const  TourPage = (props) =>{
+    console.log(props)
+    const {pageInfo} = props;
     const router = useRouter(),
      {id, comment} = router.query,
      [isModalOpen, setIsModalOpen] = useState(false);
      const [visible, setVisible] = useState(false)
+
+    console.log(router.locale)
 
 
      const [tours, setTours] = useState()
@@ -37,22 +50,15 @@ const  TourPage = () =>{
        phone_number: '',
        text: '',
      })
-     const [pageInfo, setPageInfo] = useState({})
-     const fetchTour = async () => {
-        const req = await fetch(`http://127.0.0.1:8000/ru/api/v1/tours/${id}/`)
-        const res = await req.json()
-         setPageInfo(res.data)
-        console.log(res.data)
 
-    }
     const fetchdata = async () => {
-        const req = await fetch('http://127.0.0.1:8000/ru/api/v1/tours/?is_draft=false')
+        const req = await fetch(`http://127.0.0.1:8000/${router.locale}/api/v1/tours/?is_draft=false`)
         const res = await req.json()
         setTours(res.data)
     }
      useEffect(() => {
-        fetchdata(); fetchTour()
-     },[id])
+        fetchdata();
+     },[])
 
     
      const submitHandler = async () =>{
@@ -131,7 +137,7 @@ const  TourPage = () =>{
                         <div className="afisha">
                             <p className="text">{pageInfo?.name} </p>
                             <p id="line"></p>
-                            <p className="text2">{pageInfo?.is_one_day ? 'Однодневный': 'Многодневный'}</p>
+                            <p className="text2">{pageInfo?.category}</p>
                             <button onClick={() => setVisible(true)}  className="tour__position-btn">Смотреть фото</button>
                         </div>
                     </div>
@@ -141,9 +147,9 @@ const  TourPage = () =>{
 
                 <div className='tour__info'>
                     <h1 className={'tour__info-title'}>TOUR PAGE {id} {pageInfo?.name}</h1>
-                    <div className='tour__top'>
+                    <div className='tour__top'> <br/>
                         <div>
-                            <h2 className="main__story-title red">{pageInfo?.category}</h2>
+                            {/* <h2 className="main__story-title red">{pageInfo?.category}</h2> */}
                             {/* <h4>{pageInfo?.category}</h4> */}
                         </div>
                     </div>
@@ -156,8 +162,15 @@ const  TourPage = () =>{
                       <li>Itinerary: {pageInfo?.programs?.map(el => el.name).join(' - ')}</li>
                       <li>Duration: {pageInfo?.days} days</li>
                       <li>Category: {pageInfo?.category}</li>
-                      <li>Start Date: {pageInfo?.start_date || '-'}</li>
-                      <li>End Date: {pageInfo?.end_date || '-'}</li>
+                        {
+                        pageInfo?.start_date &&
+                            <li>Start Date: {pageInfo?.start_date}</li>
+                       }
+                       {
+                        pageInfo?.end_date &&
+                            <li>End Date: {pageInfo?.end_date}</li>
+                       }
+
                       {/* <li>Group Size:  6-13 pax</li> */}
                       {/* <li>Highlights: Lake Kolsay, Charyn Canyon, Issyk-Kol Lake, Son-Kol Lake, Osh, Bukhara, Samarkand, Tashkent</li>
                       <li>Requirements: weatherproof warm clothes, trekking boots, hat, sunglasses, gloves, and sunscreen</li> */}
