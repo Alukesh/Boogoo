@@ -126,6 +126,7 @@ const  TourPage = (props) =>{
                 <NewImg preview={{ visible: false, }} style={{display: 'none', marginBottom:'-30px'}} width={200} src={pageInfo?.images}/>
                 <div style={{display: 'none'}}>
                     <NewImg.PreviewGroup preview={{visible,onVisibleChange: (vis) => setVisible(vis),}} >
+                    <NewImg  src={pageInfo?.image} />
                     {
                         pageInfo?.images?.map(inf =>(
                         <NewImg style={{display: 'none'}} src={inf.image} />
@@ -175,6 +176,7 @@ const  TourPage = (props) =>{
                 <div className='tour__form'>
                 <div className="row">
                   <div className="tour__images-column">
+                  <NewImg  src={pageInfo?.image} />
                     {
                       pageInfo?.images?.map((inf, idx) =>(
                         <NewImg  src={inf.image} />
