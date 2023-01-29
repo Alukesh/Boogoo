@@ -22,6 +22,18 @@
         "see_gallery": "Gallery",
         "read_more": "read more",
         "days": "days:"
+    },
+    "tour": {
+        "duration": "Duration",
+        "category": "Category",
+        "programs": {
+            "day": "Day",
+            "place": "Place",
+            "altitude": "Altitude",
+            "food": "Food",
+            "no_food": "not included"
+        }
+        
     }
 
 

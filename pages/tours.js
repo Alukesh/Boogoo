@@ -13,6 +13,7 @@ import Link from 'next/link';
 import {  Modal } from 'antd';
 import axios from 'axios';
 import Head from 'next/head';
+import { useTranslations } from 'next-intl';
 
 
 
@@ -39,9 +40,9 @@ const  TourPage = (props) =>{
      [isModalOpen, setIsModalOpen] = useState(false);
      const [visible, setVisible] = useState(false)
 
-    // console.log(router.locale)
 
 
+     const t = useTranslations('tour')
      const [tours, setTours] = useState()
      const [tourForm, setTourForm] = useState({
        sender: '' , 
@@ -137,7 +138,7 @@ const  TourPage = (props) =>{
                             <p className="text">{pageInfo?.name} </p>
                             <p id="line"></p>
                             <p className="text2">{pageInfo?.category}</p>
-                            <button onClick={() => setVisible(true)}  className="tour__position-btn">Смотреть фото</button>
+                            {/* <button onClick={() => setVisible(true)}  className="tour__position-btn">Смотреть фото</button> */}
                         </div>
                     </div>
             </div>
@@ -145,20 +146,19 @@ const  TourPage = (props) =>{
             <div className='container tour__text'>
 
                 <div className='tour__info'>
-                    <h1 className={'tour__info-title'}>TOUR PAGE {id} {pageInfo?.name}</h1>
+                    <h1 className={'tour__info-title'}> {pageInfo?.name}</h1>
                     <div className='tour__top'> <br/>
                         <div>
                         </div>
                     </div>
 
 
-                    <h4 className='tour__description'>
+                    <p className='tour__description'>
                         {pageInfo?.description}
-                    </h4> <br/><br/><br/>
+                    </p> <br/><br/><br/>
                     <div className='tour__description-programm'>
-                      <li>Itinerary: {pageInfo?.programs?.map(el => el.name).join(' - ')}</li>
-                      <li>Duration: {pageInfo?.days} days</li>
-                      <li>Category: {pageInfo?.category}</li>
+                      <li><strong>{t("duration")}</strong>: {pageInfo?.days} {t('programs.day')}</li>
+                      <li><strong>{t('category')}</strong>: {pageInfo?.category}</li>
                         {
                         pageInfo?.start_date &&
                             <li>Start Date: {pageInfo?.start_date}</li>
@@ -180,11 +180,12 @@ const  TourPage = (props) =>{
                         <NewImg  src={inf.image} />
                       ))
                     }
-                     {
+                     {/* {
                       pageInfo?.images?.map(inf =>(
                         <NewImg  src={inf.image} />
                       ))
-                    }
+                    } */}
+                    <button onClick={() => setVisible(true)}  className="">Смотреть фото</button>
                   </div>
                   
                 </div>
@@ -209,13 +210,13 @@ const  TourPage = (props) =>{
                         <Collapse defaultActiveKey={['0']}>
                             {
                                 pageInfo?.programs?.map((prog, id) => (
-                                    <Panel style={{minWidth:'46vw', fontWeight:'700'}} header={`${prog.day} День`} key={id}>
+                                    <Panel style={{minWidth:'46vw', fontWeight:'700'}} header={`${prog.day} ${t('programs.day')}`} key={id}>
                                         <div className={'tourPage__info-col'} >
                                             <h2>{pageInfo?.programs[id]?.name}</h2>
                                             <div className={'tourPage__info-wrapper'}>
                                                 <div className='tourPage__info-box'>
-                                                    <h4>{prog.day} День</h4>
-                                                    <h4>Жилье:</h4>
+                                                    <h4>{prog.day} {t('programs.day')}</h4>
+                                                    <h4>{t('programs.place')}:</h4>
                                                     <MdMoreTime className='tourPage__info-icon'/>
                                                     <ul>
                                                         {/* {pageInfo?.programs?.map(el => ())} */}
@@ -224,13 +225,13 @@ const  TourPage = (props) =>{
                                                 </div>
 
                                                 <div className='tourPage__info-box'>
-                                                    <h4>Высота</h4>
+                                                    <h4>{t('programs.altitude')}</h4>
                                                     <p>{pageInfo?.programs[id]?.altitude}</p>
                                                     <GiMountainRoad className='tourPage__info-icon'/>
                                                     {}
                                                 </div>
                                                 <div className='tourPage__info-box'>
-                                                    <h4>Питание</h4>
+                                                    <h4>{t('programs.food')}</h4>
                                                     <p>{pageInfo?.programs[id]?.meal?.join(', ')}</p>
                                                     <MdFoodBank className='tourPage__info-icon'/>
                                                     {}

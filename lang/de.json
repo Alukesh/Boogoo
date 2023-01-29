@@ -22,7 +22,19 @@
         "see_gallery": "Galerie",
         "read_more": "weiterlesen",
         "days": "tage"
+    },
+    "tour": {
+        "duration": "Dauer",
+        "category": "Kategorie",
+        "programs": {
+            "day": "Tag",
+            "place": "Gehäuse",
+            "altitude": "Höhe",
+            "food": "Essen",
+            "no_food": "nicht enthalten"
+        }
     }
+    
     
 
 }
