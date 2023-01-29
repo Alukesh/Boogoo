@@ -216,7 +216,7 @@ const  TourPage = (props) =>{
                                                     <h4>{t('programs.place')}:</h4>
                                                     <MdMoreTime className='tourPage__info-icon'/>
                                                     <ul>
-                                                        <li>{prog.accommodation}{prog.accommodation} {prog.accommodation} {prog.accommodation} {prog.accommodation} {prog.accommodation}</li>
+                                                        <li>{prog.accommodation}</li>
                                                     </ul>
                                                 </div>
                                                 {
