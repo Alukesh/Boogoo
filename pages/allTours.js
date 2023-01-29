@@ -34,10 +34,10 @@ const  allTours = (props) => {
     const router = useRouter(),
     {search, tag, is_one_day,category} = router.query
 
-    const t = useTranslations('header')
+    const t = useTranslations('main')
 
 
-    const [tours, setTours] = useState()
+    const [tours, setTours] = useState([])
     const [categories, setCategories] = useState([])
     const [searchText, setSearchText] = useState('')
     const [oneDay, setOneDay] = useState('')
@@ -124,7 +124,7 @@ const  allTours = (props) => {
        
 
         <section className=" sectionservice works">
-            <h2 className="section_title">{tours?.length ?'Все туры' : 'Туры не найдены'}</h2>
+        <h2 className="section_title">{!tours?.length ? 'Туры не найдены' : t('tours_title') }</h2>
 
         </section>
         <div className="container">
@@ -158,58 +158,7 @@ const  allTours = (props) => {
                     </Link>
                 )})
             }
-              {
-                tours?.map(t => {
-                    const src = t.image
-                    return (
-                        <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'}}}
-                        key={t?.id} className="alltours__card card">
-                        <div className="images-block" style={{height:'100%'}}>
-                        <Image className='alltours__cardBg'  width={300} height={50} loader={() => src} src={src} alt="bish"/>
-                            <span className="images-block__info">
-                            <span className="icon icon-logo hidden-sm"></span>
-                            <span className="images-block__info-bottom">
-                                <span className="alltours__card-text">{t.name}</span>
-                                <span className="images-block__amount"></span>
-                                <span className="card__tags">
-                                    {
-                                        t.tags.map((str , idx)=> (
-                                            <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
-                                        ))
-                                    }
-                                </span>
-                            </span>
-                            </span>
-                        </div>
-                    </Link>
-                )})
-            }
-            {
-                tours?.map(t => {
-                    const src = t.image
-                    return (
-                        <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'}}}
-                        key={t?.id} className="alltours__card card">
-                        <div className="images-block" style={{height:'100%'}}>
-                        <Image className='alltours__cardBg' width={300} height={50} loader={() => src} src={src} alt="bish"/>
-                            <span className="images-block__info">
-                            <span className="icon icon-logo hidden-sm"></span>
-                            <span className="images-block__info-bottom">
-                                <span className="alltours__card-text">{t.name}</span>
-                                <span className="images-block__amount"></span>
-                                <span className="card__tags">
-                                    {
-                                        t.tags.map((str , idx)=> (
-                                            <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
-                                        ))
-                                    }
-                                </span>
-                            </span>
-                            </span>
-                        </div>
-                    </Link>
-                )})
-            }
+             
             {/* {
                 tours?.map(t => {
                     const src = t.image

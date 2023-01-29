@@ -21,7 +21,7 @@ export default function Header(props){
     const [open, setOpen] = useState(false)
 
 
-   console.log(locale)
+   console.log(router)
     
 
         
@@ -96,18 +96,17 @@ export default function Header(props){
             <div className={`lang-menu  ${lang && 'open'}`}>
 
                 <div className={`selected-lang ${locale}`} onClick={() => setLang(!lang)}>
-                    {locale == 'en' ? 'Eng' : locale == 'de' ? 'De' : 'Рус'}
+                    <span className='lang-menu-text'>{locale == 'en' ? 'Eng' : locale == 'de' ? 'De' : 'Рус'}</span>
                 </div>
                 <ul>
                     <li>
-                        <Link href={'/'} locale={'ru'}  className="ru">Русский</Link>
+                        <Link href={'/'+router.asPath} locale={'ru'}  className="ru">Русский</Link>
                     </li>
                     <li>
-                        <Link href={'/'} locale={'en'}  className="en">English</Link>
+                        <Link href={'/'+router.asPath} locale={'en'}  className="en">English</Link>
                     </li>
                     <li>
-                        <Link href={'/'} locale={'de'}  className="de">Deutch</Link>
-                        {/* <a href="" className="de"></a> */}
+                        <Link href={'/'+router.asPath} locale={'de'}  className="de">Deutch</Link>
                     </li>
 
                 </ul>

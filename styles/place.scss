@@ -101,6 +101,11 @@ z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    &.active{
+        background-color: #9cb9d1;
+        color: snow;
+    }
 }
 .asit_grid_buttons_borderLine{
     width: 100%;
@@ -185,4 +190,16 @@ z-index: 10;
         display: flex;
         flex-direction: column;
         row-gap: 25px;
+    }
+
+
+    @media (max-width:600px){
+        .place{
+            .parent{
+                display: flex;
+                gap: 5px;
+                flex-direction: column;
+            }
+        }
+        
     }

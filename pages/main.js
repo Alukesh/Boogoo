@@ -168,72 +168,7 @@ const  Main = () => {
                 </Link>
                 )})
             }
-              {
-                tours?.map(tour => {
-                    const src = tour.image
-                    return (
-                    <Link href={{ pathname: '/tours',  query: { id: tour.id, comment: 'asdsa'},
-                    }} key={tour?.id} className=" card card__best">
-                        <div className='card__imgBox'>
-                            <Image className='card__img' width={300} height={400} loader={() => src} unoptimizied src={src} alt="bish"/>
-                        </div>
-                        <div className='card__inf'>
-                            <div className="best">
-                                <p>Best</p>
-                            </div>
-                            <h3 className="card__title">{tour.name}</h3>
-                            <div className="card__bot">
-                                <span className="card__tags">
-                                    {
-                                        tour.tags.map((str , idx)=> (
-                                            <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
-                                        ))
-                                    }
-                                </span>
-                                <span className="card__time">
-                                    <Image width={50} className="card__icon" src={clock}  unoptimized alt="time"/>
-                                    <span>{t('days')} {tour.days}</span>
-                                </span>
-                            </div> 
-                        </div>
-                </Link>
-                )})
-            }
-              {
-                tours?.map(tour => {
-                    const src = tour.image
-                    return (
-                    <Link href={{ pathname: '/tours',  query: { id: tour.id, comment: 'asdsa'},
-                    }} key={tour?.id} className=" card card__best">
-                        <div className='card__imgBox'>
-                            <Image className='card__img' width={300} height={400} loader={() => src} unoptimizied src={src} alt="bish"/>
-                        </div>
-                        <div className='card__inf'>
-                            <div className="best">
-                                <p>Best</p>
-                            </div>
-                            <h3 className="card__title">{tour.name}</h3>
-                            <div className="card__bot">
-                                <span className="card__tags">
-                                    {
-                                        tour.tags.map((str , idx)=> (
-                                            <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
-                                        ))
-                                    }
-                                </span>
-                                <span className="card__time">
-                                    <Image width={50} className="card__icon" src={clock}  unoptimized alt="time"/>
-                                    <span>{t('days')} {tour.days}</span>
-                                </span>
-                            </div> 
-                        </div>
-                </Link>
-                )})
-            }
-                
-                
-                
-
+             
                 
 
             </div>
@@ -318,15 +253,6 @@ const  Main = () => {
         </>
     )
 }
-
-// Main.getInitialProps = async ()=>{
-//     const req = await fetch('http://127.0.0.1:8000/ru/api/v1/tours/?is_draft=false')
-//     const tours = await req.json()
-
-
-//     return {tours: tours}
-
-//  }
 
 
 

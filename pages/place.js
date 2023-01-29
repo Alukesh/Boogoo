@@ -3,8 +3,7 @@ import  Image  from 'next/image';
 import { Image as NewImg} from 'antd';
 import  Link  from 'next/link';
 import nomad from '../public/nomad.jpg'
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { Collapse } from 'antd';
 const { Panel } = Collapse;
 import Head from 'next/head'
@@ -59,9 +58,8 @@ const place = ({pageInfo}) => {
             <div className='aist_main_container'>
             <div className='aist_container'>
             <div className='aist_grid_buttons'>
-              <button onClick={()=> hideGallery()}>ITINERARY</button>
-              <button>LOCATION</button>
-              <button onClick={()=> viewGallery()}>GALLERY</button>
+              <button onClick={()=> hideGallery()} className={lorem =='aist_lorem1200' && 'aist_grid_button active'}>ITINERARY</button>
+              <button onClick={()=> viewGallery()} className={gal =='aist_gallery_view' && 'aist_grid_button active'}>GALLERY</button>
           </div>
               <div className="parent">
               <div className="div1">
@@ -78,7 +76,7 @@ const place = ({pageInfo}) => {
                       ))
                     }
                   </div>
-                  <div className="column">
+                  {/* <div className="column">
                   {
                       pageInfo?.images?.map((inf, idx) =>(
                         <NewImg key={idx} src={inf.image} />
@@ -98,15 +96,14 @@ const place = ({pageInfo}) => {
                         <NewImg key={idx} src={inf.image} />
                       ))
                     }
-                  </div>
+                  </div> */}
                 </div>
 
                 
                 </div>
 
               <div  style={{position: 'relative' , width: '100%', height: '400px', margin: '22px 0', }}>
-                  {/* <NewImg preview={{ visible: false, }} width={200} src={pageInfo?.images}
-                    onClick={() => setVisible(true)} /> */}
+                
                   <div style={{display: 'none'}}>
                    <NewImg.PreviewGroup preview={{visible,onVisibleChange: (vis) => setVisible(vis),}} >
                     {

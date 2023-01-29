@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import blogImg1 from '../public/bish.png'
-import blogImg2 from '../public/isyklake.jpg'
-import blogImg3 from '../public/nomad.jpg'
+// import blogImg1 from '../public/bish.png'
+// import blogImg2 from '../public/isyklake.jpg'
+// import blogImg3 from '../public/nomad.jpg'
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head'
 
 
@@ -58,13 +57,7 @@ const Blog = ({tours}) => {
             
             <div className="container">
                 <div className="prc card-blur">
-                    <Link className="card price3" href={{ pathname: '/place',  query: { id:' t.id', comment: 'asdsa'},}} >
-                            <Image src={blogImg1} alt="asf" width={1920} height={380} />
-                        <div className="card__bg"> </div>
-                        <div className="ptext1">The best one-day hikes near Bishkek</div>
-                        <p className="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p>
-                        <p className="pricetext2">Читать больше</p>
-                    </Link>
+                  
                     {
                         tours?.map( ( t, idx) => (
                             <Link key={idx} href={{ pathname: '/place',  query: { id: t.id, comment: 'asdsa'},}} className={"card price3"}>
@@ -76,20 +69,7 @@ const Blog = ({tours}) => {
                             </Link>
                         ))
                     }
-                    <div className="card price3">
-                        <Image src={blogImg2} alt="asagag" width={1920} height={380}/>
-                        <div className="card__bg"> </div>
-                        <div className="ptext1">Why you should choose Kyrgyzstan for your next vacation</div>
-                        <p className="">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                        <p className="pricetext2">Читать больше</p>
-                    </div>
-                    <div className=" price2 card">
-                        <Image src={blogImg3} alt="yandex metric" width={1920} height={380}/>
-                        <div className="card__bg"> </div>
-                        <div className="ptext1">A guide to Kyrgyz nomad games</div>
-                        <p className="">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
-                        <p className="pricetext2">Читать больше</p>
-                    </div>
+                 
                 </div>
                  
             </div>

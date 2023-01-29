@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import  Image  from 'next/image';
 import Link from 'next/link';
 import {GrYoutube, GrTictok} from 'react-icons/gr'
+import {BsMusicNote} from 'react-icons/bs'
 import {FiPhoneCall} from 'react-icons/fi'
 import {FaTelegram} from 'react-icons/fa'
 import {AiFillInstagram, AiFillFacebook, AiOutlineTwitter, AiFillSkype,AiOutlineWhatsApp} from 'react-icons/ai'
@@ -19,6 +20,7 @@ export default function Footer(){
      locale = router.locale;
 
      const [media, setMedia] = useState([])
+     const [contacts, setContacts] = useState([])
       useEffect(()=>{
         const fetchdata = async () => {
             const req = await fetch( `http://127.0.0.1:8000/${locale}/api/v1/social_networks/`)
@@ -26,9 +28,16 @@ export default function Footer(){
             setMedia(res.data)
         }
         fetchdata()
+        const fetchContacts = async () => {
+            const req = await fetch( `http://127.0.0.1:8000/${locale}/api/v1/contacts`)
+            const res = await req.json()
+            res.data.length ?
+            setContacts(res.data[0])
+            : setContacts([])     
+        }
+        fetchContacts()
     
     },[])
-    console.log(media   )
         
       const allMedia = {
         Twitter: <AiOutlineTwitter/>,
@@ -38,9 +47,8 @@ export default function Footer(){
         Skype: <AiFillSkype/>,
         WhatsApp: <AiOutlineWhatsApp/>,
         Telegram: <FaTelegram/>,
-        TicTok: <GrTictok/>
+        TicTok: <BsMusicNote/>
       }
-
 
     return(
         
@@ -63,7 +71,6 @@ export default function Footer(){
                                     <a key={el.id} className="icon" href={el.link}>{allMedia[el.name]}</a>
                                 ))
                             }
-                        
                         </div>
                     </div>
                  
@@ -72,17 +79,22 @@ export default function Footer(){
                 <div className="footer__info-contact">
                     <div className="footer__info-address">
                         <h4 className="footer__info-title">CONTACT US</h4>
-                       
-                        <a className="footer__info-address-link" href="tel:239942334022"><FiPhoneCall/>+23 994 233 4022</a>
-                        <a className="footer__info-address-link" href="mailto:info@konstruct.com">info@konstruct.com</a>
+                      
+                                {
+                                    contacts?.phone_numbers?.map(num => (
+                                        <a className="footer__info-address-link" href="tel:239942334022"><FiPhoneCall/> {num}</a>
+                                    ))
+                                }
+                                <a className="footer__info-address-link" href="mailto:info@konstruct.com">{contacts.email}</a>    
+                           
+                        
                     </div>
                 </div>
 
                 <div className="footer__info-contact">
                     <div className="footer__info-address">
                         <h4 className="footer__info-title">ADDRESS</h4>
-                        <a className="footer__info-address-link" href="https://goo.gl/maps/AG4g7NUgWb885CJ78">213 Baker Street
-                        Oriel City Kounty 7000 KNW, Country Name </a>
+                        <a className="footer__info-address-link" href={contacts?.address}>{contacts?.address}</a>
                     </div>
                 </div>
 

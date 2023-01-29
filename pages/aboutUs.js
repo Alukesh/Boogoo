@@ -42,15 +42,8 @@ const aboutUs = ({about, employees}) => {
                     <div className="main__story-box">
                         <div className="main__story-info">
                             <div  className="main__story-textabove">{about?.title}</div>
-                                {/* <p className="main__story-textbelow">{about?.description}</p> */}
-                                <p className="main__story-textbelow">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed
-                                    diam
-                                    nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat. Lorem ipsum dolor sit
-                                    amet,
-                                    consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-                                    magna
-                                    aliquam erat.
-                                </p>
+                                <p className="main__story-textbelow">{about?.description}</p>
+                                
                             </div>
                             <div className="main__story-blocks">
                                 <div className="main__story-block main__story-block1">WE <br/> PLAN</div>
@@ -76,6 +69,17 @@ const aboutUs = ({about, employees}) => {
                             disableOnInteraction: false,
                         }}
                         slidesPerView={3}
+                        breakpoints={{
+                            810: {
+                                slidesPerView:3
+                            },
+                            630:{
+                                slidesPerView:2
+                            },
+                            100:{
+                              slidesPerView:1  
+                            }
+                        }}
                     >
                         {
                             employees?.map(u => (
@@ -92,21 +96,10 @@ const aboutUs = ({about, employees}) => {
                                 </SwiperSlide>
                             ))
                         }
+                        
 
                     </Swiper>
-                    {/* {
-                        employees?.map(u => (
-                            <div className='employee'>
-                                <div className='employee__image'>
-                                    <Image loader={() => u.image || '/nouser.webp'} src={ u.image || '/nouser.webp'} fill alt='no employee image'/>
-                                </div>
-                                <div className='employee__info'>
-                                    <h3>{u.surname} {u.first_name} {u.patronymic}</h3>
-                                    <p>{u.email}</p>
-                                </div>
-                            </div>
-                        ))
-                    } */}
+                  
                     
 
                 </div>

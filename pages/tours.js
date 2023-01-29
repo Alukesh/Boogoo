@@ -33,14 +33,13 @@ import Head from 'next/head';
 
 
 const  TourPage = (props) =>{
-    console.log(props)
     const {pageInfo} = props;
     const router = useRouter(),
-     {id, comment} = router.query,
+     {id} = router.query,
      [isModalOpen, setIsModalOpen] = useState(false);
      const [visible, setVisible] = useState(false)
 
-    console.log(router.locale)
+    // console.log(router.locale)
 
 
      const [tours, setTours] = useState()
@@ -149,8 +148,6 @@ const  TourPage = (props) =>{
                     <h1 className={'tour__info-title'}>TOUR PAGE {id} {pageInfo?.name}</h1>
                     <div className='tour__top'> <br/>
                         <div>
-                            {/* <h2 className="main__story-title red">{pageInfo?.category}</h2> */}
-                            {/* <h4>{pageInfo?.category}</h4> */}
                         </div>
                     </div>
 
@@ -171,9 +168,7 @@ const  TourPage = (props) =>{
                             <li>End Date: {pageInfo?.end_date}</li>
                        }
 
-                      {/* <li>Group Size:  6-13 pax</li> */}
-                      {/* <li>Highlights: Lake Kolsay, Charyn Canyon, Issyk-Kol Lake, Son-Kol Lake, Osh, Bukhara, Samarkand, Tashkent</li>
-                      <li>Requirements: weatherproof warm clothes, trekking boots, hat, sunglasses, gloves, and sunscreen</li> */}
+        
                   </div>
                 </div>
 
@@ -181,31 +176,7 @@ const  TourPage = (props) =>{
                 <div className="row">
                   <div className="tour__images-column">
                     {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg  src={inf.image} />
-                      ))
-                    }
-                     {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg  src={inf.image} />
-                      ))
-                    }
-                  </div>
-                  <div className="tour__images-column">
-                    {
-                        pageInfo?.images?.map(inf =>(
-                          <NewImg  src={inf.image} />
-                        ))
-                      }
-                       {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg  src={inf.image} />
-                      ))
-                    }
-                  </div>
-                  <div className="tour__images-column">
-                    {
-                      pageInfo?.images?.map(inf =>(
+                      pageInfo?.images?.map((inf, idx) =>(
                         <NewImg  src={inf.image} />
                       ))
                     }
