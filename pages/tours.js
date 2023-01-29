@@ -182,7 +182,7 @@ const  TourPage = (props) =>{
                         <NewImg  src={inf.image} />
                       ))
                     }
-                    <button onClick={() => setVisible(true)}  className="">Смотреть фото</button>
+                    <button onClick={() => setVisible(true)}  className="tour__images-btn">Смотреть фото</button>
                   </div>
                   
                 </div>
@@ -240,9 +240,9 @@ const  TourPage = (props) =>{
 
                                         {
                                             prog.additionally &&
-                                            <Collapse style={{fontWeight:'500'}} defaultActiveKey={['0']}>
+                                            <Collapse defaultActiveKey={['0']}>
                                                 <Panel header="Additionally" key="Первая панель">
-                                                    <p>{prog.additionally}</p>
+                                                    <p className={'tourPage__info-additional'} style={{fontWeight:'500'}}>{prog.additionally}</p>
                                                 </Panel>
                                             </Collapse>
                                         }

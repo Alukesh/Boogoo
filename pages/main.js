@@ -158,6 +158,7 @@ const  Main = () => {
                                             <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
                                         ))
                                     }
+                                    
                                 </span>
                                 <span className="card__time">
                                     <Image width={50} className="card__icon" src={clock}  unoptimized alt="time"/>

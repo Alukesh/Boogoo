@@ -65,7 +65,7 @@
     padding: 120px 0;
     background-color: #eeeef2;
     // background-color: rgb(162, 209, 208);
-    ;
+    
     &-wrapper{
         display: flex;
         gap:25px;
@@ -97,6 +97,9 @@
         font-size: 14px;
         width: 450px;
         max-width: 100%;
+    }
+    &-additional{
+        width:35vw;
     }
 }
 .tourPage__info-row{
@@ -149,6 +152,17 @@
     margin-top: 11px;
     & img{
     margin-top: 4px;
+    }
+}
+.tour__images-btn{
+    border: none;
+    cursor: pointer;
+    background-color: #4C1F8C;
+    // background-color: #65256f;
+    color: white;
+    transition: all .4s;
+    &:hover{
+        background-color: #abc232;
     }
 }
 .tours__form{
@@ -264,6 +278,9 @@ font-family: 'Poppins', sans-serif;
         &-box{
             margin: 0;
             flex-grow: 1;
+        }
+        &-additional{
+            width:65vw;
         }
     }
 }

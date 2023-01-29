@@ -12,8 +12,11 @@
   
   /* Create four equal columns that sits next to each other */
   .column {
-    flex: 25%;
-    max-width: 25%;
+    // flex: 25%;
+    // max-width: 25%;
+    display: grid;
+    gap: 4px;
+    grid-template-columns: repeat(4, 1fr);
     padding: 0 4px;
   }
   
