@@ -4,10 +4,13 @@ const nextConfig = {
   images: {
     domains: ['127.0.0.1.8000']
   },
-i18n: {
-  locales: ['ru', 'en', 'de'],
-  defaultLocale: 'ru'
-},
+  i18n: {
+    locales: ['ru', 'en', 'de'],
+    defaultLocale: 'ru'
+  },
+  experimental: {
+    outputStandalone: true
+  }
 };
 module.exports = {
   output: 'standalone',

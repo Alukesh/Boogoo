@@ -9,7 +9,7 @@ import main2 from '../public/main2.png'
 import main3 from '../public/main3.png'
 import main4 from '../public/main4.png'
 import {VscSearch} from 'react-icons/vsc'
-import slider2 from '../public/slidernew.webp'
+import { useTranslations } from 'next-intl';
 import bish from '../public/bish.png'
 import nomad from '../public/nomad.jpg'
 import isyklake from '../public/isyklake.jpg'
@@ -36,7 +36,7 @@ import Head from 'next/head';
 
 
 const  Main = () => {
-
+    const t = useTranslations('main')
     
     const onCategoryChange = (value) => {
     console.log(`selected ${value}`);
@@ -72,7 +72,6 @@ const  Main = () => {
 
         fetchPlaces()
     },[])
-    console.log(categories);
 
     const videoBg = '/ktour.mp4'
 
@@ -91,7 +90,7 @@ const  Main = () => {
                         <Select
                         size='large'
                         dropdownMatchSelectWidth={true}
-                            defaultValue="Категория"
+                            defaultValue={categories.length ? categories[0].name : 'Категория'}
                             onChange={e => setSearchCategory(e)}
                             options={categories?.map(c => (
                                 {
@@ -109,24 +108,24 @@ const  Main = () => {
                             options={[
                                 {
                                 value: true,
-                                label: 'однодневные',
+                                label: t('searchCategoty_true'),
                                 },
                                 {
                                     value: false,
-                                    label: 'многодневные',
+                                    label: t('searchCategoty_false'),
                                 },
                             ]}
                             />
                     </div>
                     <input value={search} onChange={(e) => setSearch(e.target.value)} className='home__form-input' type="text" placeholder="City, place" />
-                    <Link href={{pathname:'/allTours', query: {search: search, is_one_day: oneDay, category: searchCategory}}} className='home__form-btn' >Найти <VscSearch/></Link>
+                    <Link href={{pathname:'/allTours', query: {search: search, is_one_day: oneDay, category: searchCategory}}} className='home__form-btn' >{t('searchBtn')} <VscSearch/></Link>
                 </form>
             </div>
         </div>
         
 
         <section className=" sectionservice works">
-            <h2 className="section_title">Наши туры</h2>
+            <h2 className="section_title">{t('tours_title')}</h2>
 
         </section>
         <div className="container">
@@ -135,11 +134,11 @@ const  Main = () => {
             <div className="prc card-blur"> 
                 
             {
-                tours?.map(t => {
-                    const src = t.image
+                tours?.map(tour => {
+                    const src = tour.image
                     return (
-                    <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
-                    }} key={t?.id} className=" card card__best">
+                    <Link href={{ pathname: '/tours',  query: { id: tour.id, comment: 'asdsa'},
+                    }} key={tour?.id} className=" card card__best">
                         <div className='card__imgBox'>
                             <Image className='card__img' width={300} height={400} loader={() => src} unoptimizied src={src} alt="bish"/>
                         </div>
@@ -150,19 +149,19 @@ const  Main = () => {
                             <div className="best">
                                 <p>Best</p>
                             </div>
-                            <h3 className="card__title">{t.name}</h3>
+                            <h3 className="card__title">{tour.name}</h3>
                             {/* <p className="card__descr">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus, repellat.</p> */}
                             <div className="card__bot">
                                 <span className="card__tags">
                                     {
-                                        t.tags.map((str , idx)=> (
+                                        tour.tags.map((str , idx)=> (
                                             <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
                                         ))
                                     }
                                 </span>
                                 <span className="card__time">
                                     <Image width={50} className="card__icon" src={clock}  unoptimized alt="time"/>
-                                    <span>{t.days} days</span>
+                                    <span>{t('days')} {tour.days}</span>
                                 </span>
                             </div> 
                         </div>
@@ -170,65 +169,65 @@ const  Main = () => {
                 )})
             }
               {
-                tours?.map(t => {
-                    const src = t.image
+                tours?.map(tour => {
+                    const src = tour.image
                     return (
-                    <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
-                    }} key={t?.id} className="card card__best">
+                    <Link href={{ pathname: '/tours',  query: { id: tour.id, comment: 'asdsa'},
+                    }} key={tour?.id} className=" card card__best">
                         <div className='card__imgBox'>
-                            <Image className='card__img' width={300} height={400} loader={() => src}   loading="lazy" src={src} alt="bish"/>
+                            <Image className='card__img' width={300} height={400} loader={() => src} unoptimizied src={src} alt="bish"/>
                         </div>
                         <div className='card__inf'>
                             <div className="best">
                                 <p>Best</p>
                             </div>
-                            <h3 className="card__title">{t.name}</h3>
+                            <h3 className="card__title">{tour.name}</h3>
                             <div className="card__bot">
                                 <span className="card__tags">
                                     {
-                                        t.tags.map((str , idx)=> (
+                                        tour.tags.map((str , idx)=> (
                                             <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
                                         ))
                                     }
                                 </span>
                                 <span className="card__time">
-                                    <Image width={50} className="card__icon" loading="lazy" src={clock} alt="time"/>
-                                    <span>{t.days} days</span>
+                                    <Image width={50} className="card__icon" src={clock}  unoptimized alt="time"/>
+                                    <span>{t('days')} {tour.days}</span>
                                 </span>
-                            </div>
+                            </div> 
                         </div>
-                    </Link>
+                </Link>
                 )})
             }
-            {
-                tours?.map(t => {
-                    const src = t.image
+              {
+                tours?.map(tour => {
+                    const src = tour.image
                     return (
-                    <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'},
-                    }} key={t?.id} className="card card__best">
+                    <Link href={{ pathname: '/tours',  query: { id: tour.id, comment: 'asdsa'},
+                    }} key={tour?.id} className=" card card__best">
                         <div className='card__imgBox'>
-                            <Image className='card__img' width={300} height={400} loading="lazy"  loader={() => src} src={src} alt="bish"/>
+                            <Image className='card__img' width={300} height={400} loader={() => src} unoptimizied src={src} alt="bish"/>
                         </div>
                         <div className='card__inf'>
                             <div className="best">
                                 <p>Best</p>
                             </div>
-                            <h3 className="card__title">{t.name}</h3>
+                            <h3 className="card__title">{tour.name}</h3>
                             <div className="card__bot">
                                 <span className="card__tags">
                                     {
-                                        t.tags.map((str , idx)=> (
+                                        tour.tags.map((str , idx)=> (
                                             <Link href={{pathname:'/gallery', query: {tag:str}}} key={idx}> #{str} </Link>
                                         ))
                                     }
                                 </span>
                                 <span className="card__time">
-                                    <Image width={50} className="card__icon"loading="lazy"  src={clock} alt="time"/>
-                                    <span>{t.days} days</span>
+                                    <Image width={50} className="card__icon" src={clock}  unoptimized alt="time"/>
+                                    <span>{t('days')} {tour.days}</span>
                                 </span>
-                            </div>
+                            </div> 
                         </div>
-                    </Link>
+                </Link>
                 )})
             }
                 
@@ -239,7 +238,7 @@ const  Main = () => {
 
             </div>
             <Link href={{pathname: '/allTours', query:{search: ''}}}>
-                <button className="downprice">Все туры</button>
+                <button className="downprice">{t('see_tours')}</button>
             </Link>
             
         </div>
@@ -251,37 +250,37 @@ const  Main = () => {
         </div>
 
         <section className="sectionservice">
-            <h2 className="section_title ">Почему у нас</h2>
+            <h2 className="section_title ">{t('adv_title')}</h2>
             <div className="container">
                 <div className="group">
                     <div className="group1">
                         <Image width={120} height={120} className="group__img" loading="lazy"  src={main1} alt="Туризм по духу"/>
-                        <p className="ptext1">Туризм по духу</p>
+                        <p className="ptext1">{t('adv1')}</p>
                        
                     </div>
 
 
                     <div className="group2">
                         <Image width={180} height={130} className="group__img" loading="lazy" src={main2} alt="Туризм по духу"/>
-                        <p className="ptext1">Доступные предложения по цене</p>
+                        <p className="ptext1">{t('adv2')}</p>
                       
                     </div>
 
                     <div className="group3">
                     <Image width={80} height={110} className="group__img" loading="lazy" src={main3} alt="Туризм по духу"/>
-                        <p className="ptext1">Отдых без напряжения</p>
+                        <p className="ptext1">{t('adv3')}</p>
                         
                     </div>
 
                     <div className="group4">
                         <Image width={80} height={110} className="group__img"  loading="lazy"src={main4} alt="Туризм по духу"/>
-                        <p className="evenly">Оправданное доверие наших клиентов</p>
+                        <p className="evenly">{t('adv4')}</p>
                         
                     </div>
                 </div>
                 <div style={{textAlign: 'center'}}>
                     <strong>
-                    <p className="ptext4">Хотите узнать подробность, <br/> телефон для связи:</p>
+                    <p className="ptext4">{t('for_details1')}<br/> {t('for_details2')}</p>
                     <a className="ptext3" href='tel:9960553577575'>+996 (0553) 577-575</a>
                     </strong>
                 </div>
@@ -295,20 +294,20 @@ const  Main = () => {
             <div className="container">
                 <div className="prc card-blur">
                     {
-                        places?.map( t => (
-                            <Link key={t?.id} href={{ pathname: '/place',  query: { id: t.id, comment: 'asdsa'},}} className={"card price3"}>
-                                <Image loader={() => t.image} src={t.image} alt="asf" width={1920} height={380} />
+                        places?.map( place => (
+                            <Link key={place?.id} href={{ pathname: '/place',  query: { id: place.id, comment: 'asdsa'},}} className={"card price3"}>
+                                <Image loader={() => place.image} src={place.image} alt="asf" width={1920} height={380} />
                                 <div className="card__bg"> </div>
-                                <div className="ptext1">{t.name}</div>
-                                <p className="">{t.description?.slice(0,121)}</p>
-                                <p className="pricetext2">Читать больше</p>
+                                <div className="ptext1">{place.name}</div>
+                                <p className="">{place.description?.slice(0,121)}</p>
+                                <p className="pricetext2">{t('read_more')}</p>
                             </Link>
                         ))
                     }
     
                 </div>
                 <Link href={{pathname: '/gallery'}}>
-                    <button className="downprice">Галерея</button>
+                    <button className="downprice">{t('see_gallery')}</button>
                 </Link>
             </div>
         </section>

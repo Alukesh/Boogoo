@@ -45,6 +45,7 @@ export default function Footer(){
     return(
         
         <footer className="footer">
+            
         <div className="container">
             <div className="footer__info">
                 <div className="footer__info-company">
@@ -59,17 +60,10 @@ export default function Footer(){
                         <div>
                             {
                                 media?.map(el => (
-                                    <a key={el.id} className="icon" href="#">{allMedia[el.name]}</a>
+                                    <a key={el.id} className="icon" href={el.link}>{allMedia[el.name]}</a>
                                 ))
                             }
-                            {/* <a className="icon" href="#"><AiOutlineTwitter/></a>
-                            <a className="icon" href="#"><AiFillInstagram/></a>
-                            <a className="icon" href="#"><AiFillFacebook/></a>
-                            <a className="icon" href="#"><GrYoutube/></a>
-                            <a className="icon" href="#"><AiFillSkype/></a>
-                            <a className="icon" href="#"><AiOutlineWhatsApp/></a>
-                            <a className="icon" href="#"><FaTelegram/></a>
-                            <a className="icon" href="#"><GrTictok/></a> */}
+                        
                         </div>
                     </div>
                  
