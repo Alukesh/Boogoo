@@ -40,7 +40,7 @@ const  TourPage = (props) =>{
      [isModalOpen, setIsModalOpen] = useState(false);
      const [visible, setVisible] = useState(false)
 
-
+    console.log(pageInfo);
 
      const t = useTranslations('tour')
      const [tours, setTours] = useState()
@@ -182,11 +182,6 @@ const  TourPage = (props) =>{
                         <NewImg  src={inf.image} />
                       ))
                     }
-                     {/* {
-                      pageInfo?.images?.map(inf =>(
-                        <NewImg  src={inf.image} />
-                      ))
-                    } */}
                     <button onClick={() => setVisible(true)}  className="">Смотреть фото</button>
                   </div>
                   
@@ -221,26 +216,37 @@ const  TourPage = (props) =>{
                                                     <h4>{t('programs.place')}:</h4>
                                                     <MdMoreTime className='tourPage__info-icon'/>
                                                     <ul>
-                                                        {/* {pageInfo?.programs?.map(el => ())} */}
-                                                        <li>{prog.accommodation}</li>
+                                                        <li>{prog.accommodation}{prog.accommodation} {prog.accommodation} {prog.accommodation} {prog.accommodation} {prog.accommodation}</li>
                                                     </ul>
                                                 </div>
-
-                                                <div className='tourPage__info-box'>
-                                                    <h4>{t('programs.altitude')}</h4>
-                                                    <p>{pageInfo?.programs[id]?.altitude}</p>
-                                                    <GiMountainRoad className='tourPage__info-icon'/>
-                                                    {}
-                                                </div>
+                                                {
+                                                    prog?.altitude &&
+                                                    <div className='tourPage__info-box'>
+                                                        <h4>{t('programs.altitude')}</h4>
+                                                        <p>{prog?.altitude}</p>
+                                                        <GiMountainRoad className='tourPage__info-icon'/>
+                                                        {}
+                                                    </div>
+                                                }
                                                 <div className='tourPage__info-box'>
                                                     <h4>{t('programs.food')}</h4>
-                                                    <p>{pageInfo?.programs[id]?.meal?.join(', ')}</p>
+                                                    <p>{prog?.meal?.join(', ')}</p>
                                                     <MdFoodBank className='tourPage__info-icon'/>
                                                     {}
                                                 </div>
                                             </div>
-                                            <p className={'tourPage__info-descr'}>{prog.description}</p>
+                                            <p className={'tourPage__info-descr'} style={{fontWeight: '500'}}>{prog.description}</p>
                                         </div>
+
+                                        {
+                                            prog.additionally &&
+                                            <Collapse style={{fontWeight:'500'}} defaultActiveKey={['0']}>
+                                                <Panel header="Additionally" key="Первая панель">
+                                                    <p>{prog.additionally}</p>
+                                                </Panel>
+                                            </Collapse>
+                                        }
+                                        
                                     </Panel>
                                 ))
                             }

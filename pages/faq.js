@@ -51,6 +51,7 @@ const Faq = ({faq}) => {
                         ))
                     }
                 </Collapse>
+                
                     
             </div>
             

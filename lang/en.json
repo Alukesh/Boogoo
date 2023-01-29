@@ -28,7 +28,7 @@
         "category": "Category",
         "programs": {
             "day": "Day",
-            "place": "Place",
+            "place": "Accommodation",
             "altitude": "Altitude",
             "food": "Food",
             "no_food": "not included"
