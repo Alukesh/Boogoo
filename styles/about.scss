@@ -39,7 +39,7 @@
       }
       &-info{
         width: 50%;
-        text-align: start;
+        text-align: left;
       }
       &-textabove{
         margin-bottom: 30px;
@@ -53,10 +53,10 @@
       }
       &-textbelow{
         font-family: OpenSans, sans-serif;
-        font-size: 13px;
-        line-height: 23px;
+        font-size: 17px;
+        line-height: 25px;
         letter-spacing: 0.19px;
-        max-width: 380px;
+        max-width: 480px;
   
       }
       &-blocks{
@@ -74,7 +74,7 @@
       &-block{
         width: 33%;
         padding: 15px 0 150px 15px;
-        text-align: start;
+        text-align: left;
       }
       &-block1{
         background: url(../public/slide1.jpg) center/cover no-repeat;

@@ -26,14 +26,14 @@ export async function getServerSideProps(context){
 }
 
 
-const place = ({pageInfo}) => {
+const Place = ({pageInfo}) => {
   const [lorem, setLorem] = useState('aist_lorem1200')
   const [gal, setGal] = useState('aist_gallery_none')
   const [visible, setVisible] = useState(false)
   const viewGallery = () => {
     setLorem('aist_lorem_none')
     setGal('aist_gallery_view')
-    console.log(lorem)
+    // console.log(lorem)
   }
   const hideGallery = () => {
     setGal('aist_gallery_none')
@@ -58,8 +58,8 @@ const place = ({pageInfo}) => {
             <div className='aist_main_container'>
             <div className='aist_container'>
             <div className='aist_grid_buttons'>
-              <button onClick={()=> hideGallery()} className={lorem =='aist_lorem1200' && 'aist_grid_button active'}>ITINERARY</button>
-              <button onClick={()=> viewGallery()} className={gal =='aist_gallery_view' && 'aist_grid_button active'}>GALLERY</button>
+              <button onClick={()=> hideGallery()} className={lorem =='aist_lorem1200' ? 'aist_grid_button active':''}>ITINERARY</button>
+              <button onClick={()=> viewGallery()} className={gal =='aist_gallery_view' ? 'aist_grid_button active':''}>GALLERY</button>
           </div>
               <div className="parent">
               <div className="div1">
@@ -114,7 +114,7 @@ const place = ({pageInfo}) => {
                     </NewImg.PreviewGroup>
                     </div>
                 <Image alt={pageInfo?.name || 'Картинка места туризма'} loader={() => pageInfo?.image} src={pageInfo?.image || nomad}
-                    onClick={() => setVisible(true)} fill style={{objectFit: 'cover'}}/>
+                    onClick={() => setVisible(true)} fill unoptimized='true' style={{objectFit: 'cover'}}/>
               </div>
                 
 
@@ -143,4 +143,4 @@ const place = ({pageInfo}) => {
   );
 };
 
-export default place;
+export default Place;

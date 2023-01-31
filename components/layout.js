@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Footer from "./footer";
 import Header from "./header";
 
@@ -7,7 +8,7 @@ export default function Layout({children}){
     return(
         <>
          <Head>
-        <meta lang="en" />
+            <meta lang="en" />
             <link rel="icon" href="/favicon.ico"/>
             <meta charSet="UTF-8" />
             <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -27,6 +28,7 @@ export default function Layout({children}){
             <link rel="apple-touch-icon"  href="/bugu_travel_logo1.jpg" />
             <title>Boogoo Travel</title>
         </Head>
+
            <Header/>
            {children}
            <Footer/>

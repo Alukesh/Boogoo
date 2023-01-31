@@ -38,9 +38,7 @@ import Head from 'next/head';
 const  Main = () => {
     const t = useTranslations('main')
     
-    const onCategoryChange = (value) => {
-    console.log(`selected ${value}`);
-    };
+
     
     const router = useRouter(),
      locale = router.locale;
@@ -71,7 +69,7 @@ const  Main = () => {
         }
 
         fetchPlaces()
-    },[])
+    },[locale])
 
     const videoBg = '/ktour.mp4'
 
@@ -140,7 +138,7 @@ const  Main = () => {
                     <Link href={{ pathname: '/tours',  query: { id: tour.id, comment: 'asdsa'},
                     }} key={tour?.id} className=" card card__best">
                         <div className='card__imgBox'>
-                            <Image className='card__img' width={300} height={400} loader={() => src} unoptimizied src={src} alt="bish"/>
+                            <Image className='card__img' width={300} unoptimized='true' loading="lazy" height={400} loader={() => src} unoptimizied='true' src={src} alt="bish"/>
                         </div>
                         {/* <span  className="card__icon card__geo" data-title={t.tags.join(', ')}>
                             <img className="card__icon" src={'/gps.png'}/>
@@ -232,7 +230,7 @@ const  Main = () => {
                     {
                         places?.map( place => (
                             <Link key={place?.id} href={{ pathname: '/place',  query: { id: place.id, comment: 'asdsa'},}} className={"card price3"}>
-                                <Image loader={() => place.image} src={place.image} alt="asf" width={1920} height={380} />
+                                <Image loader={() => place.image} src={place.image} alt="asf"  loading="lazy" unoptimized='true' width={1920} height={380} />
                                 <div className="card__bg"> </div>
                                 <div className="ptext1">{place.name}</div>
                                 <p className="">{place.description?.slice(0,121)}</p>

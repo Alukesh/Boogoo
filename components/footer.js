@@ -37,7 +37,7 @@ export default function Footer(){
         }
         fetchContacts()
     
-    },[])
+    },[locale])
         
       const allMedia = {
         Twitter: <AiOutlineTwitter/>,
@@ -81,8 +81,8 @@ export default function Footer(){
                         <h4 className="footer__info-title">CONTACT US</h4>
                       
                                 {
-                                    contacts?.phone_numbers?.map(num => (
-                                        <a className="footer__info-address-link" href="tel:239942334022"><FiPhoneCall/> {num}</a>
+                                    contacts?.phone_numbers?.map((num, id) => (
+                                        <a key={id} className="footer__info-address-link" href="tel:239942334022"><FiPhoneCall/> {num}</a>
                                     ))
                                 }
                                 <a className="footer__info-address-link" href="mailto:info@konstruct.com">{contacts.email}</a>    

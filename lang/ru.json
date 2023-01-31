@@ -26,6 +26,9 @@
     "tour": {
         "duration": "Продолжительность",
         "category": "Категория",
+        "price": "Цена",
+        "starts": "Начало",
+        "ends": "Конец",
         "programs": {
             "day": "День",
             "place": "Жилье",

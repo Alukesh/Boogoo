@@ -30,9 +30,10 @@ export function getStaticProps({locale}){
 
 
 
-const  allTours = (props) => {
+const  AllTours = (props) => {
     const router = useRouter(),
-    {search, tag, is_one_day,category} = router.query
+    {search, tag, is_one_day,category, offset} = router.query;
+    const [toursLimit, setToursLimit] = useState(6)
 
     const t = useTranslations('main')
 
@@ -44,9 +45,10 @@ const  allTours = (props) => {
     const [searchCategory, setSearchCategory] = useState('')
     useEffect(()=>{
         const fetchdata = async () => {
-            const req = await fetch(`http://127.0.0.1:8000/${router.locale }/api/v1/tours/?is_draft=false&search=${search}&tags__name=${tag || ''}&is_one_day=${is_one_day || ''}&category__name=${category || ''}`)
+            // console.log(offset)
+            const req = await fetch(`http://127.0.0.1:8000/${router.locale }/api/v1/tours/?is_draft=false&offset=${offset || ''}&limit=${toursLimit}&search=${search||''}&tags__name=${tag || ''}&is_one_day=${is_one_day || ''}&category__name=${category || ''}`)
             const res = await req.json()
-            setTours(res.data)
+            res?.data && setTours(res.data)
         }
         fetchdata()
         
@@ -56,30 +58,37 @@ const  allTours = (props) => {
             setCategories(res?.data)
         }
         fetchCategories()
-    },[search, is_one_day, category])
+    },[search, is_one_day, category, offset, router.locale, toursLimit, tag])
     
-
-    const videoBg = '/ktour.mp4'
-
+    // console.log(tours);
+    const pagePaginate = [];
+    for (let i= 1; i <= Math.ceil(tours.count / toursLimit); i++){
+        pagePaginate.push(i)
+    }
+    
+    
+    const clickedPagination = (pageBtn) => {
+        // filter.page !== pageBtn &&
+        // navigate(`/catalog/${pageBtn}`)
+    };
     return(
         <>
-
         
 
         <section className='banner'>
-            <div id="banner" style={{height: '340px',}}>
-                <Carousel autoplay='6.6'  dotPosition={'right'} easing >
+            <div id="banner" style={{height: '340px'}}>
+                <Carousel autoplay='6.6' style={{width:'100%', height: '400px', overflow:'hidden'}}  dotPosition={'right'} easing >
                     <div className='home_slider1'>
-                        <Image className='slideimg1' src={slider1} alt='asa' unoptimized priority style={{width:'100%', height: '400px', objectFit: 'cover'}} />
+                        <Image className='slideimg1' src={slider1} alt='asa'  priority style={{width:'100%', height: '400px', objectFit: 'cover'}} />
                     </div>
                     <div className={'home_slider1'}>
-                        <Image className={'slideimg1'} src={slider2} alt='asa' unoptimized priority style={{width:'100%', height: '400px', objectFit: 'cover'}} />
+                        <Image className={'slideimg1'} src={slider2} alt='asa'  loading="lazy" style={{width:'100%', height: '400px', objectFit: 'cover'}} />
                     </div>
                     <div className={'home_slider1'}>
-                        <Image className={'slideimg1'} src={slider3} alt='asa' unoptimized style={{width:'100%', height: '400px', objectFit: 'cover'}} />
+                        <Image className={'slideimg1'} src={slider3} alt='asa'  loading="lazy" style={{width:'100%', height: '400px', objectFit: 'cover'}} />
                     </div>
                     <div className={'home_slider1'}>
-                        <Image className={'slideimg1'} src={slider4} alt='asa' unoptimized style={{width:'100%', height: '400px', objectFit: 'cover'}} />
+                        <Image className={'slideimg1'} src={slider4} alt='asa'  loading="lazy" style={{width:'100%', height: '400px', objectFit: 'cover'}} />
                     </div>
 
                 </Carousel>
@@ -98,7 +107,7 @@ const  allTours = (props) => {
                             ))}
                             />
                         <Select
-                        size='large'
+                        size='large'  
                         dropdownMatchSelectWidth={true}
                             defaultValue={true}
                             // style={{width: 200}}
@@ -124,22 +133,28 @@ const  allTours = (props) => {
        
 
         <section className=" sectionservice works">
-        <h2 className="section_title">{!tours?.length ? 'Туры не найдены' : t('tours_title') }</h2>
+        <h2 className="section_title">{!tours?.results?.length ? 'Туры не найдены' : t('tours_title') }</h2>
 
         </section>
-        <div className="container">
+        <div className="alltours__main container">
             
          
             <div className="prc card-blur"> 
                 
                 {
-                tours?.map(t => {
+                tours?.results?.map(t => {
                     const src = t.image
                     return (
                         <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'}}}
-                        key={t?.id} className="alltours__card card">
-                        <div className="images-block" style={{height:'100%'}}>
-                        <Image className='alltours__cardBg'  width={300} height={350} loader={() => src} src={src} alt="bish"/>
+                        key={t?.id} className="alltours__card card ">
+                        <div className="images-block" style={{height:'100%', width:'100%'}}>
+                        <Image className='alltours__cardBg'  loading="lazy" width={300} height={350} loader={() => src} src={src} alt="bish"/>
+                            {
+                                t.price &&
+                                <div className="best">   
+                                    <p>{t.price}$</p>
+                                </div>
+                            }
                             <span className="images-block__info">
                             <span className="icon icon-logo hidden-sm"></span>
                             <span className="images-block__info-bottom">
@@ -157,41 +172,30 @@ const  allTours = (props) => {
                         </div>
                     </Link>
                 )})
-            }
+                }
              
-            {/* {
-                tours?.map(t => {
-                    const src = t.image
-                    return (
-                    <Link href={{ pathname: '/tours',  query: { id: t.id, comment: 'asdsa'}}}
-                         key={t?.id}    "alltours__card card">
-                        <div class="images-block" >
-                        <Image className='altours__card-bg' fill loader={() => src} src={src} alt="bish"/>
-                            <span class="images-block__info">
-                            <span class="icon icon-logo hidden-sm"></span>
-                            <span class="images-block__info-bottom">
-                            <span class="alltours__card-text">{t.name}</span>
-                                <span class="images-block__amount"></span>
-                                <span  className="card__icon altours__card-geo" data-title={t.tags.join(', ')}>
-                                    <img className="card__icon" src={'/gps.png'}/>
-                                </span>
-                            </span>
-                            </span>
-                        </div>
-                    </Link>
-                )})
-            } */}
-           
-           
-            <div >
                 
+                
+
+                
+
             </div>
-                
-                
-                
-
-                
-
+            <div className="pagination">
+                {
+                    +offset > 0 &&
+                    <Link href={router.asPath,{ query:{offset: +offset - toursLimit }}}>&laquo;</Link>
+                }
+                {
+                     pagePaginate.map((num, id)=>(
+                        <Link key={id} href={router.asPath,{ query:{offset: (num -1) * toursLimit }
+                        }}
+                         className={(+offset +  toursLimit)/ toursLimit == num ? 'active' : ''}>{num}</Link>
+                     ))
+                }
+                {
+                    +offset + toursLimit < tours?.count &&
+                    <Link href={router.asPath,{ query:{offset: +offset + toursLimit }}}>&raquo;</Link>
+                }
             </div>
         </div>
 
@@ -205,7 +209,7 @@ const  allTours = (props) => {
 
 
 
- export default allTours;
+ export default AllTours;
 
 
 

@@ -171,7 +171,11 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    
+    &-error{
+        color: red;
+        font-size: 14px;
+        margin: -10px 0 0 15px  ;
+    }
 }
 .tours__modal_inputs{
     gap: 10px;

@@ -1,7 +1,5 @@
 import  Image  from 'next/image';
 import Link from 'next/link';
-import bish from '../public/bogoo.jpg'
-import { Select } from 'antd';
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -21,7 +19,7 @@ export default function Header(props){
     const [open, setOpen] = useState(false)
 
 
-   console.log(router)
+//    console.log(router)
     
 
         
@@ -68,19 +66,19 @@ export default function Header(props){
                
             </div>
             <ul className="ulnav">
-                <Link  className={`nav ${navLink =='/' && 'active'}`} locale={locale} href={{
+                <Link  className={`nav ${navLink =='/' && 'active'}`}  href={{
                     pathname: '/'
                 }}>{t('main')}</Link>
-                 <Link  className={`nav ${navLink =='/allTours' && 'active'}`} locale={locale} href={{
-                    pathname: '/allTours', query:{search: ''}
+                 <Link  className={`nav ${navLink.toLowerCase().includes('tours') && 'active'}`}  href={{
+                    pathname: '/allTours', query:{search: '', offset: 0}
                 }}>{t('tours')}</Link>
-                <Link  className={`nav ${navLink =='/gallery' && 'active'}`} locale={locale} href={{
-                    pathname: '/gallery'
+                <Link  className={`nav ${navLink.toLowerCase().includes('place') && 'active'}`}  href={{
+                    pathname: '/allPlaces'
                 }}>{t('gallery')}</Link>
-                <Link  className={`nav ${navLink =='/faq' && 'active'}`} locale={locale} href={{
+                <Link  className={`nav ${navLink.includes('faq') && 'active'}`}  href={{
                     pathname: '/faq'
                 }}>FAQ</Link>
-                <Link  className={`nav ${navLink =='/aboutUs' && 'active'}`} locale={locale} href={{
+                <Link  className={`nav ${navLink =='/aboutUs' && 'active'}`}  href={{
                     pathname: '/aboutUs'
                 }}>{t('about')}</Link>
                 {/* <li><a className="nav" href="#">Контакты</a></li> */}
@@ -92,21 +90,21 @@ export default function Header(props){
     
         <div className='navigation__lang'>
           
-            {/* <img className='navigation__lang-globus' width={30} src="https://img.icons8.com/metro/26/null/globe.png"/> */}
+            <Image className='navigation__lang-globus' height={130} width={130} alt='globe' src="/globe.svg"/>
             <div className={`lang-menu  ${lang && 'open'}`}>
 
-                <div className={`selected-lang ${locale}`} onClick={() => setLang(!lang)}>
+                <div className={`selected-lang not${locale}`} onClick={() => setLang(!lang)}>
                     <span className='lang-menu-text'>{locale == 'en' ? 'Eng' : locale == 'de' ? 'De' : 'Рус'}</span>
                 </div>
                 <ul>
                     <li>
-                        <Link href={'/'+router.asPath} locale={'ru'}  className="ru">Русский</Link>
+                        <Link href={router.asPath} locale={'ru'}  className="noflagru">Русский</Link>
                     </li>
                     <li>
-                        <Link href={'/'+router.asPath} locale={'en'}  className="en">English</Link>
+                        <Link href={router.asPath} locale={'en'}  className="noflagen">English</Link>
                     </li>
                     <li>
-                        <Link href={'/'+router.asPath} locale={'de'}  className="de">Deutch</Link>
+                        <Link href={router.asPath} locale={'de'}  className="noflagde">Deutch</Link>
                     </li>
 
                 </ul>

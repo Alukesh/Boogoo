@@ -26,6 +26,9 @@
     "tour": {
         "duration": "Dauer",
         "category": "Kategorie",
+        "price": "Preis",
+        "starts": "Anfang",
+        "ends": "Ende",
         "programs": {
             "day": "Tag",
             "place": "Gehäuse",

@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from "swiper";
+import {FiPhoneCall} from 'react-icons/fi'
 import 'swiper/css';
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -27,8 +29,21 @@ export const getServerSideProps = async ({locale}) => {
 }
 
 
-const aboutUs = ({about, employees}) => {
-    console.log(about, employees)
+const AboutUs = ({about, employees}) => {
+    const router = useRouter(),
+    locale = router.locale;
+    const [contacts, setContacts] = useState([])
+    useEffect(()=>{
+        const fetchContacts = async () => {
+            const req = await fetch( `http://127.0.0.1:8000/${locale}/api/v1/contacts`)
+            const res = await req.json()
+            res.data.length ?
+            setContacts(res.data[0])
+            : setContacts([])     
+        }
+        fetchContacts()
+    },[locale])
+    // console.log(about, employees)
     return (
         <>
          <Head>
@@ -45,16 +60,40 @@ const aboutUs = ({about, employees}) => {
                                 <p className="main__story-textbelow">{about?.description}</p>
                                 
                             </div>
-                            <div className="main__story-blocks">
+                            <div className='main__story-contacts'>
+                                <strong>Адрес:</strong><br/><br/>
+                                <p>
+                                    <a className="footer__info-address-link" target='blank' href={contacts?.address}> {contacts?.address}</a>
+                                </p><br/>
+
+                                
+                                <strong>Контактные телефоны:</strong><br/><br/>
+                                <ul>
+                                {
+                                    contacts?.phone_numbers?.map((num, id) => (
+                                        <li key={id}>
+                                            <a className="footer__info-address-link" href="tel:239942334022"><FiPhoneCall/> {num}</a><br/><br/>
+                                        </li>
+                                    ))
+                                }
+                                </ul> <br/><br/>
+                                
+                                <strong>Email:</strong> <a className="footer__info-address-link" href="mailto:info@konstruct.com"> {contacts.email}</a>   
+                            </div>
+
+
+                            {/* <div className="main__story-blocks">
                                 <div className="main__story-block main__story-block1">WE <br/> PLAN</div>
                                 <div className="main__story-block main__story-block2">WE MANAGE</div>
                                 <div className="main__story-block main__story-block3">WE <br/> BUILD</div>
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>
                 
             </section>
+
+
 
             <section className='employee__bg'>
                 <div className='container employee__block'>
@@ -63,7 +102,7 @@ const aboutUs = ({about, employees}) => {
                         modules={[Autoplay, Pagination, Navigation]}
                         spaceBetween={10}
                         navigation={true}
-                        loop={true}
+                        loop={employees.length > 3}
                         autoplay={{
                             delay: 2500,
                             disableOnInteraction: false,
@@ -82,8 +121,9 @@ const aboutUs = ({about, employees}) => {
                         }}
                     >
                         {
-                            employees?.map(u => (
-                                <SwiperSlide>
+                            employees?.map((u, idx) => (
+                                // <React.Fragment>
+                                <SwiperSlide key={idx}>
                                     <div className='employee'>
                                         <div className='employee__image'>
                                             <Image loader={() => u.image || '/nouser.webp'} src={ u.image || '/nouser.webp'} fill alt='no employee image'/>
@@ -94,6 +134,7 @@ const aboutUs = ({about, employees}) => {
                                         </div>
                                     </div>
                                 </SwiperSlide>
+                                // </React.Fragment>
                             ))
                         }
                         
@@ -109,4 +150,4 @@ const aboutUs = ({about, employees}) => {
     );
 };
 
-export default aboutUs;
+export default AboutUs;

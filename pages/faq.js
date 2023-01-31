@@ -23,7 +23,7 @@ export const getServerSideProps = async ({locale}) => {
 
 const Faq = ({faq}) => {
     const { Panel } = Collapse;
-    console.log(faq);
+    // console.log(faq);
   
 
   function onChange(key) {

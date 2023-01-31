@@ -13,7 +13,7 @@
 }
 
 .lang-menu {
-    width: 100px;
+    width: 70px;
     text-align: right;
     font-weight: bold;
     // margin-top: 25px;
@@ -29,7 +29,7 @@
 .lang-menu .selected-lang:before {
     content: '';
     display: inline-block;
-    width: 32px;
+    // width: 32px;
     height: 32px;
     // background-image: url('../public/ru.jpg');
     background-size: contain;
@@ -209,7 +209,8 @@ header{
     align-items:center;
     gap:5px;
     &-globus{
-
+        width: 30px;
+        height: 30px;
     }
 }
 
